@@ -2,7 +2,7 @@ import { z } from "zod";
 import { signUpRequestSchema } from "./signup.request";
 
 export const userSchema = signUpRequestSchema.extend({
-  id: z.number().int().positive(),
+  id: z.cuid(),
   birthday: z.coerce.date().optional(),
   createdAt: z.date(),
   updatedAt: z.date().optional(),
