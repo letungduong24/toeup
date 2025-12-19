@@ -80,7 +80,7 @@ export class FlashcardsService {
     const where: any = {};
 
     if (folderId) {
-      // Verify folder ownership
+      // Verify folder ownership or public access
       const folder = await this.prisma.folder.findUnique({
         where: { id: folderId },
       });
@@ -89,7 +89,8 @@ export class FlashcardsService {
         throw new NotFoundException('Folder không tồn tại');
       }
 
-      if (folder.user_id !== userId) {
+      // Allow access if user owns the folder OR folder is public
+      if (folder.user_id !== userId && !folder.isPublic) {
         throw new ForbiddenException('Bạn không có quyền truy cập folder này');
       }
 

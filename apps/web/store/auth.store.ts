@@ -63,6 +63,7 @@ const useAuthStore = create<AuthState>((set) => ({
             set({ user: null });
             if (error.response?.data?.message) {
                 toast.error(error.response.data.message)
+                throw new Error(error.response.data.message)
             } else if (error.errors) {
                 toast.error('Dữ liệu không hợp lệ')
             } else {
@@ -79,7 +80,7 @@ const useAuthStore = create<AuthState>((set) => ({
         set({signUpLoading: true})
         try {
             const validatedCredentials = signUpRequestSchema.parse(credentials);
-            const response = await api.post('/auth/register', validatedCredentials)
+            const response = await api.post('/auth/signup', validatedCredentials)
             const user = userResponseSchema.parse(response.data);
             set({ user });
             toast.success('Đăng ký thành công!')

@@ -1,9 +1,9 @@
 'use client';
 
-import { LoginForm } from "@/components/login-form"
+import { SignupForm } from "@/components/signup-form"
 import AuthGuard from "@/components/auth-guard"
 
-export default function Login() {
+export default function Signup() {
   return (
     <AuthGuard requireAuth={false} redirectTo="/">
       <div className="flex-1 grid lg:grid-cols-2">
@@ -15,7 +15,7 @@ export default function Login() {
           </div>
           <div className="flex flex-1 items-center justify-center">
             <div className="w-full max-w-xs">
-              <LoginForm />
+              <SignupForm />
             </div>
           </div>
         </div>
@@ -30,3 +30,4 @@ export default function Login() {
     </AuthGuard>
   )
 }
+

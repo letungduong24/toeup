@@ -35,7 +35,7 @@ export function Navbar() {
           className="flex items-center space-x-2"
         >
           <span className="font-bold text-2xl">
-            Toeup.
+            Flashup.
           </span>
         </Link>
 

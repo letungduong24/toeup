@@ -250,4 +250,215 @@ export class FoldersService {
       reviewCount: 0,
     };
   }
+
+  async findPublic(
+    options: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      sortBy?: 'name' | 'createdAt' | 'saves';
+      sortOrder?: 'asc' | 'desc';
+    } = {},
+  ) {
+    const {
+      page = 1,
+      limit = 12,
+      search,
+      sortBy = 'saves',
+      sortOrder = 'desc',
+    } = options;
+
+    const where: any = {
+      isPublic: true,
+    };
+
+    // Search filter
+    if (search && search.trim()) {
+      where.name = { contains: search.trim(), mode: 'insensitive' };
+    }
+
+    // Calculate skip for pagination
+    const skip = (page - 1) * limit;
+
+    // Get total count
+    const total = await this.prisma.folder.count({ where });
+
+    // Build orderBy
+    const orderBy: any = {};
+    if (sortBy === 'saves') {
+      orderBy.saves = sortOrder;
+    } else {
+      orderBy[sortBy] = sortOrder;
+    }
+
+    // Get paginated data
+    const folders = await this.prisma.folder.findMany({
+      where,
+      orderBy,
+      skip,
+      take: limit,
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    // Calculate statistics for each folder
+    const data = await Promise.all(
+      folders.map(async (folder) => {
+        const { newCount, reviewCount } = await this.getFolderStatistics(folder.id);
+        return {
+          ...folder,
+          newCount,
+          reviewCount,
+        };
+      })
+    );
+
+    return {
+      data,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+        hasMore: skip + data.length < total,
+      },
+    };
+  }
+
+  async togglePublic(userId: string, id: string) {
+    const folder = await this.prisma.folder.findUnique({
+      where: { id },
+    });
+
+    if (!folder) {
+      throw new NotFoundException('Folder không tồn tại');
+    }
+
+    if (folder.user_id !== userId) {
+      throw new ForbiddenException('Bạn không có quyền thay đổi trạng thái chia sẻ folder này');
+    }
+
+    const updatedFolder = await this.prisma.folder.update({
+      where: { id },
+      data: {
+        isPublic: !folder.isPublic,
+      },
+    });
+
+    // Calculate statistics
+    const { newCount, reviewCount } = await this.getFolderStatistics(id);
+
+    return {
+      ...updatedFolder,
+      newCount,
+      reviewCount,
+    };
+  }
+
+  async findOnePublic(id: string) {
+    const folder = await this.prisma.folder.findUnique({
+      where: { id },
+      include: {
+        flashcards: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!folder) {
+      throw new NotFoundException('Folder không tồn tại');
+    }
+
+    if (!folder.isPublic) {
+      throw new ForbiddenException('Folder này không được chia sẻ công khai');
+    }
+
+    // Calculate statistics
+    const { newCount, reviewCount } = await this.getFolderStatistics(id);
+
+    return {
+      ...folder,
+      newCount,
+      reviewCount,
+    };
+  }
+
+  async savePublicFolder(userId: string, publicFolderId: string) {
+    // Get the public folder with flashcards
+    const publicFolder = await this.prisma.folder.findUnique({
+      where: { id: publicFolderId },
+      include: {
+        flashcards: true,
+      },
+    });
+
+    if (!publicFolder) {
+      throw new NotFoundException('Folder không tồn tại');
+    }
+
+    if (!publicFolder.isPublic) {
+      throw new ForbiddenException('Folder này không được chia sẻ công khai');
+    }
+
+    // Create new folder for the user
+    const newFolder = await this.prisma.folder.create({
+      data: {
+        name: publicFolder.name,
+        description: publicFolder.description,
+        user_id: userId,
+        isPublic: false,
+        saves: 0,
+      },
+    });
+
+    // Copy all flashcards
+    if (publicFolder.flashcards && publicFolder.flashcards.length > 0) {
+      await this.prisma.flashcard.createMany({
+        data: publicFolder.flashcards.map((flashcard) => ({
+          name: flashcard.name,
+          meaning: flashcard.meaning,
+          folder_id: newFolder.id,
+          review_count: 0,
+          audio_url: flashcard.audio_url,
+          usage: flashcard.usage === null ? Prisma.JsonNull : (flashcard.usage as Prisma.InputJsonValue),
+          status: 'new',
+          interval: 0,
+          easeFactor: 2.5,
+          lapseCount: 0,
+          tags: flashcard.tags,
+        })),
+      });
+    }
+
+    // Increment saves count of the public folder
+    await this.prisma.folder.update({
+      where: { id: publicFolderId },
+      data: {
+        saves: {
+          increment: 1,
+        },
+      },
+    });
+
+    // Calculate statistics for the new folder
+    const { newCount, reviewCount } = await this.getFolderStatistics(newFolder.id);
+
+    return {
+      ...newFolder,
+      newCount,
+      reviewCount,
+    };
+  }
 }

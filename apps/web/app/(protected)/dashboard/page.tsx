@@ -10,13 +10,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
 import CreateFolderModal from '@/components/flashcard/create-folder-modal';
 import AIAssistantModal from '@/components/flashcard/ai-assistant-modal';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { 
-  CheckCircle2, 
   Calendar,
-  ArrowRight,
   Play,
   Pause,
   RefreshCw,
@@ -82,7 +78,6 @@ export default function DashboardPage() {
   // Calculate progress percentages (mock data for now)
   const studyProgress = totalFlashcards > 0 ? Math.round((totalStudied / totalFlashcards) * 100) : 0;
   const reviewProgress = totalFlashcards > 0 ? Math.round((totalReviewWords / totalFlashcards) * 100) : 0;
-  const completionProgress = totalFlashcards > 0 ? Math.round(((totalStudied + totalReviewWords) / totalFlashcards) * 100) : 0;
 
   // Convert daily stats to weekly chart data
   const dayNames = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
@@ -110,13 +105,6 @@ export default function DashboardPage() {
     { title: 'Học từ mới: Business English', time: '10:00', date: '25/09' },
   ];
 
-  // Mock tasks
-  const tasks = [
-    { id: 1, title: 'Hoàn thành 50 từ mới', completed: true, date: 'Hôm nay' },
-    { id: 2, title: 'Ôn tập 30 từ cần review', completed: true, date: 'Hôm nay' },
-    { id: 3, title: 'Tạo Flashbook mới', completed: false, date: 'Ngày mai' },
-    { id: 4, title: 'Luyện đề TOEIC', completed: false, date: 'Ngày mai' },
-  ];
 
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600);
@@ -316,87 +304,6 @@ export default function DashboardPage() {
 
         {/* Right Column */}
         <div className="lg:col-span-1 space-y-6">
-          {/* Onboarding Progress */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle>Tiến độ bắt đầu</CardTitle>
-                <CardDescription>{completionProgress}% hoàn thành</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <Progress value={completionProgress} className="h-3" />
-        <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Tạo Flashbook đầu tiên</span>
-                      <Badge variant={totalFlashbooks > 0 ? "default" : "outline"}>
-                        {totalFlashbooks > 0 ? "Hoàn thành" : "Chưa hoàn thành"}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Học 10 từ đầu tiên</span>
-                      <Badge variant={totalStudied >= 10 ? "default" : "outline"}>
-                        {totalStudied >= 10 ? "Hoàn thành" : "Chưa hoàn thành"}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span>Ôn tập 5 từ</span>
-                      <Badge variant={totalReviewWords >= 5 ? "default" : "outline"}>
-                        {totalReviewWords >= 5 ? "Hoàn thành" : "Chưa hoàn thành"}
-                      </Badge>
-        </div>
-      </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Tasks */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle>Nhiệm vụ</CardTitle>
-                <CardDescription>
-                  {tasks.filter(t => t.completed).length}/{tasks.length} hoàn thành
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {tasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className="flex items-start gap-3 p-3 rounded-lg border hover:bg-accent/50 transition-colors"
-                    >
-                      <div className={`mt-0.5 h-5 w-5 rounded border-2 flex items-center justify-center ${
-                        task.completed
-                          ? 'bg-green-500 border-green-500'
-                          : 'border-muted-foreground'
-                      }`}>
-                        {task.completed && <CheckCircle2 className="h-3 w-3 text-white" />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm ${task.completed ? 'line-through text-muted-foreground' : 'font-medium'}`}>
-                          {task.title}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">{task.date}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Button variant="outline" className="w-full mt-4" onClick={() => router.push('/dashboard/flashcard')}>
-                  Xem tất cả <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
         </div>
       </div>
 

@@ -5,64 +5,38 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import useFolderStore from '@/store/folder.store';
-import { ArrowLeft, Search, Loader2, X } from 'lucide-react';
+import { ArrowLeft, Search, Loader2, X, Save } from 'lucide-react';
 import { BsCardText } from 'react-icons/bs';
 import MiniFlashcard from '@/components/flashcard/mini-flashcard';
-import { FaPlus } from 'react-icons/fa';
-import { ButtonGroup } from '@/components/ui/button-group';
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import CreateFlashcardModal from '@/components/flashcard/create-flashcard-modal';
-import EditFolderModal from '@/components/flashcard/edit-folder-modal';
 import useFlashcardStore from '@/store/flashcard.store';
+import useFolderStore from '@/store/folder.store';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useDebounce, useInfiniteScroll } from '@/hooks';
 import { GiBlackBook } from "react-icons/gi";
 import { motion } from 'framer-motion';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 
-export default function FolderDetailPage() {
+export default function PublicFolderPreviewPage() {
   const params = useParams();
   const router = useRouter();
   const folderId = params.id as string;
   const { 
     currentFolder, 
     loading: folderLoading, 
-    getFolder, 
-    removeFlashcardFromCurrentFolder,
-    updateFolder,
-    deleteFolder,
-    togglePublic,
-    updateLoading,
-    deleteLoading
+    getPublicFolder,
+    savePublicFolder,
+    savingLoading
   } = useFolderStore();
   const { 
     flashcards, 
     pagination, 
     filters,
-    loading, 
+    loading: flashcardsLoading, 
     loadingMore,
     fetchFlashcards, 
     loadMoreFlashcards,
     setFilters 
   } = useFlashcardStore();
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
-  const [isUnshareDialogOpen, setIsUnshareDialogOpen] = useState(false);
-  const [pendingPublicState, setPendingPublicState] = useState<boolean | null>(null);
   const [searchInput, setSearchInput] = useState('');
   
   // Debounced search value
@@ -75,10 +49,10 @@ export default function FolderDetailPage() {
     isLoading: loadingMore,
   });
 
-  // Fetch initial data
+  // Fetch folder data
   useEffect(() => {
     if (folderId) {
-      getFolder(folderId);
+      getPublicFolder(folderId);
       fetchFlashcards(folderId, true);
     }
   }, [folderId]);
@@ -110,69 +84,13 @@ export default function FolderDetailPage() {
     (filters.sortOrder && filters.sortOrder !== 'desc')
   );
 
-  const handleEditFolder = () => {
-    setIsEditModalOpen(true);
-  };
-
-  const handleDeleteFolder = async () => {
+  const handleSave = async () => {
     if (!folderId) return;
     try {
-      await deleteFolder(folderId);
-      setIsDeleteDialogOpen(false);
+      await savePublicFolder(folderId);
       router.push('/dashboard/flashcard');
     } catch (error) {
       // Error đã được xử lý trong store
-    }
-  };
-
-  const handleUpdateSuccess = () => {
-    if (folderId) {
-      getFolder(folderId);
-    }
-  };
-
-  const handleShare = async () => {
-    if (!folderId) return;
-    try {
-      await togglePublic(folderId);
-      setIsShareDialogOpen(false);
-      setPendingPublicState(null);
-      if (folderId) {
-        getFolder(folderId);
-      }
-    } catch (error) {
-      // Error đã được xử lý trong store
-      setPendingPublicState(null);
-      if (folderId) {
-        getFolder(folderId);
-      }
-    }
-  };
-
-  const handleUnshare = async () => {
-    if (!folderId) return;
-    try {
-      await togglePublic(folderId);
-      setIsUnshareDialogOpen(false);
-      setPendingPublicState(null);
-      if (folderId) {
-        getFolder(folderId);
-      }
-    } catch (error) {
-      // Error đã được xử lý trong store
-      setPendingPublicState(null);
-      if (folderId) {
-        getFolder(folderId);
-      }
-    }
-  };
-
-  const handleToggleChange = (checked: boolean) => {
-    setPendingPublicState(checked);
-    if (checked) {
-      setIsShareDialogOpen(true);
-    } else {
-      setIsUnshareDialogOpen(true);
     }
   };
 
@@ -197,7 +115,7 @@ export default function FolderDetailPage() {
       <div className="flex flex-col gap-4">
         <Button
           variant="ghost"
-          onClick={() => router.push('/dashboard/flashcard')}
+          onClick={() => router.push('/dashboard/explore')}
           className="w-fit"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -209,12 +127,12 @@ export default function FolderDetailPage() {
               <EmptyMedia variant="icon">
                 <BsCardText />
               </EmptyMedia>
-              <EmptyTitle>Không tìm thấy folder</EmptyTitle>
-              <EmptyDescription>Folder không tồn tại hoặc bạn không có quyền truy cập.</EmptyDescription>
+              <EmptyTitle>Không tìm thấy flashbook</EmptyTitle>
+              <EmptyDescription>Flashbook không tồn tại hoặc không được chia sẻ công khai.</EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
-              <Button onClick={() => router.push('/dashboard/flashcard')}>
-                Quay lại danh sách
+              <Button onClick={() => router.push('/dashboard/explore')}>
+                Quay lại khám phá
               </Button>
             </EmptyContent>
           </Empty>
@@ -228,7 +146,7 @@ export default function FolderDetailPage() {
       {/* Header */}
       <div className="flex items-center gap-4">
         <Button
-          onClick={() => router.push('/dashboard/flashcard')}
+          onClick={() => router.push('/dashboard/explore')}
           className="w-fit"
         >
           <ArrowLeft />
@@ -240,10 +158,10 @@ export default function FolderDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Sidebar - 1/4 */}
         <div className="lg:col-span-1 space-y-4">
-          {/* Study Button */}
+          {/* Save Button */}
           <motion.div 
             className="group cursor-pointer bg-gradient-to-br w-full from-orange-300 to-orange-500 p-4 rounded-2xl flex flex-col justify-center items-start"
-            onClick={() => router.push(`/dashboard/flashcard/folder/${folderId}/study`)}
+            onClick={handleSave}
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
@@ -264,7 +182,7 @@ export default function FolderDetailPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              <GiBlackBook className='group-hover:scale-150 group-hover:rotate-180 transition-all duration-300 text-xl font-bold text-white'/>
+              <Save className='group-hover:scale-150 group-hover:rotate-180 transition-all duration-300 text-xl font-bold text-white'/>
             </motion.div>
             <motion.div 
               className="flex flex-col items-end w-full"
@@ -272,7 +190,9 @@ export default function FolderDetailPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.25, duration: 0.4 }}
             >
-              <h1 className='font-bold text-white text-xl'>Học Flashbook</h1>
+              <h1 className='font-bold text-white text-xl'>
+                {savingLoading ? 'Đang lưu...' : 'Lưu flashbook'}
+              </h1>
             </motion.div>
           </motion.div>
           <motion.div 
@@ -285,7 +205,7 @@ export default function FolderDetailPage() {
               delay: 0.15,
             }}
           >
-            {/* Folder info & actions */}
+            {/* Folder info */}
             <div className="flex flex-col gap-4">
               <p className="text-sm text-muted-foreground">
                 {pagination?.total || 0} flashcard{(pagination?.total || 0) !== 1 ? 's' : ''}
@@ -293,55 +213,7 @@ export default function FolderDetailPage() {
                   <span className="ml-2">• {currentFolder.saves} lượt lưu</span>
                 )}
               </p>
-              
-              <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                <Button className="w-full cursor-pointer group/btn" onClick={() => setIsCreateModalOpen(true)}>
-                  <FaPlus />
-                  Tạo Flashcard
-                </Button>
-              </motion.div>
-              
-              <div className="flex items-center gap-2 flex-wrap">
-                <ButtonGroup className='flex-1'>
-                  <Button 
-                    className='w-1/2' 
-                    variant={'outline'} 
-                    size="sm"
-                    onClick={handleEditFolder}
-                    disabled={updateLoading}
-                  >
-                    <FaEdit />Sửa
-                  </Button>
-                  <Button 
-                    className='w-1/2' 
-                    variant={'outline'} 
-                    size="sm"
-                    onClick={() => setIsDeleteDialogOpen(true)}
-                    disabled={deleteLoading}
-                  >
-                    <MdDelete />Xóa
-                  </Button>
-                </ButtonGroup>
-                
-              </div>
             </div>
-
-            {currentFolder && (
-              <div className="flex items-center justify-between gap-2 border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 rounded-md px-3 py-2 h-9">
-                <Label htmlFor="share-toggle" className="text-sm font-medium cursor-pointer whitespace-nowrap">
-                  Chia sẻ
-                </Label>
-                <Switch
-                  id="share-toggle"
-                  checked={pendingPublicState !== null ? pendingPublicState : currentFolder.isPublic}
-                  onCheckedChange={handleToggleChange}
-                />
-              </div>
-            )}
 
             {/* Divider */}
             <div className="border-t border-zinc-200 dark:border-zinc-700" />
@@ -422,7 +294,7 @@ export default function FolderDetailPage() {
         {/* Cards grid - 3/4 */}
         <div className="lg:col-span-3">
 
-          {loading ? (
+          {flashcardsLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {[...Array(6)].map((_, i) => (
                 <Skeleton key={i} className="h-40" />
@@ -435,15 +307,7 @@ export default function FolderDetailPage() {
                   <MiniFlashcard 
                     key={flashcard.id} 
                     flashcard={flashcard}
-                    onDelete={() => {
-                      removeFlashcardFromCurrentFolder(flashcard.id);
-                    }}
-                    onEdit={() => {
-                      if (folderId) {
-                        getFolder(folderId);
-                        fetchFlashcards(folderId);
-                      }
-                    }}
+                    readOnly={true}
                   />
                 ))}
               </div>
@@ -474,14 +338,12 @@ export default function FolderDetailPage() {
                   <EmptyDescription>
                     {hasActiveFilters 
                       ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm.'
-                      : 'Folder này chưa có flashcard nào. Hãy thêm flashcard để bắt đầu học.'}
+                      : 'Flashbook này chưa có flashcard nào.'}
                   </EmptyDescription>
                 </EmptyHeader>
                 <EmptyContent>
-                  {hasActiveFilters ? (
+                  {hasActiveFilters && (
                     <Button variant="outline" onClick={clearFilters}>Xóa bộ lọc</Button>
-                  ) : (
-                    <Button onClick={() => setIsCreateModalOpen(true)}>Thêm flashcard</Button>
                   )}
                 </EmptyContent>
               </Empty>
@@ -489,126 +351,7 @@ export default function FolderDetailPage() {
           )}
         </div>
       </div>
-      
-      <CreateFlashcardModal
-        open={isCreateModalOpen}
-        onOpenChange={setIsCreateModalOpen}
-        folderId={folderId}
-        onSuccess={() => {
-          if (folderId) {
-            getFolder(folderId);
-            fetchFlashcards(folderId);
-          }
-        }}
-      />
-
-      <EditFolderModal
-        open={isEditModalOpen}
-        onOpenChange={setIsEditModalOpen}
-        folder={currentFolder}
-        onSuccess={handleUpdateSuccess}
-      />
-
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Xóa Flashbook</DialogTitle>
-            <DialogDescription>
-              Bạn có chắc chắn muốn xóa flashbook "{currentFolder?.name}"? 
-              Hành động này không thể hoàn tác và sẽ xóa tất cả flashcard trong flashbook này.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteDialogOpen(false)}
-              disabled={deleteLoading}
-            >
-              Hủy
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDeleteFolder}
-              disabled={deleteLoading}
-            >
-              {deleteLoading ? 'Đang xóa...' : 'Xóa'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog 
-        open={isShareDialogOpen} 
-        onOpenChange={(open) => {
-          setIsShareDialogOpen(open);
-          // Nếu đóng dialog mà chưa xác nhận, revert switch về trạng thái ban đầu
-          if (!open) {
-            setPendingPublicState(null);
-          }
-        }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Chia sẻ Flashbook</DialogTitle>
-            <DialogDescription>
-              Bạn có muốn chia sẻ Flashbook này? Mọi người sẽ có thể lưu Flashbook này về và học tập cùng bạn.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsShareDialogOpen(false);
-                setPendingPublicState(null);
-              }}
-            >
-              Hủy
-            </Button>
-            <Button
-              onClick={handleShare}
-            >
-              Chia sẻ
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog 
-        open={isUnshareDialogOpen} 
-        onOpenChange={(open) => {
-          setIsUnshareDialogOpen(open);
-          // Nếu đóng dialog mà chưa xác nhận, revert switch về trạng thái ban đầu
-          if (!open) {
-            setPendingPublicState(null);
-          }
-        }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Hủy chia sẻ Flashbook</DialogTitle>
-            <DialogDescription>
-              Bạn có muốn Hủy chia sẻ? Mọi người sẽ không thể thấy Flashbook này của bạn nữa.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setIsUnshareDialogOpen(false);
-                setPendingPublicState(null);
-              }}
-            >
-              Hủy
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={handleUnshare}
-            >
-              Hủy chia sẻ
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
+

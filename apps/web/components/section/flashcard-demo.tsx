@@ -17,7 +17,7 @@ const flashcardData: FlashcardResponse = {
   lapseCount: 0,
   tags: ["noun", "science"],
   folder_id: null,
-  audio_url: null,
+  audio_url: "https://dictionary.cambridge.org/vi/media/english/uk_pron/u/uka/ukabd/ukabdic009.mp3",
   usage: [
     {
       note: "Nghĩa chung, hành vi sai lệch / khác thường",
@@ -39,10 +39,6 @@ const FlashcardDemo = () => {
       <BackgroundGradient className='w-full max-w-6xl space-y-4 bg-gray-100 p-4 rounded-2xl dark:bg-zinc-800'>
         <div className="space-y-3">
           <FlashCard flashcard={flashcardData} isMock={true}/>
-        </div>
-        <div className="w-full space-y-3">
-          <PromptInputDemo />
-          <AIResponseDemo />
         </div>
       </BackgroundGradient>
     </div>

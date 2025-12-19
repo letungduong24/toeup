@@ -31,6 +31,36 @@ export class FoldersController {
     return this.foldersService.create(request.user.id, folderRequestDto);
   }
 
+  @Get('public/explore')
+  @HttpCode(HttpStatus.OK)
+  findPublic(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('search') search?: string,
+    @Query('sort_by') sortBy?: string,
+    @Query('sort_order') sortOrder?: string,
+  ) {
+    return this.foldersService.findPublic({
+      page: page ? parseInt(page, 10) : 1,
+      limit: limit ? parseInt(limit, 10) : 12,
+      search,
+      sortBy: sortBy as 'name' | 'createdAt' | 'saves' | undefined,
+      sortOrder: sortOrder as 'asc' | 'desc' | undefined,
+    });
+  }
+
+  @Get('public/:id')
+  @HttpCode(HttpStatus.OK)
+  findOnePublic(@Param('id') id: string) {
+    return this.foldersService.findOnePublic(id);
+  }
+
+  @Post('public/:id/save')
+  @HttpCode(HttpStatus.CREATED)
+  savePublicFolder(@Request() request, @Param('id') id: string) {
+    return this.foldersService.savePublicFolder(request.user.id, id);
+  }
+
   @Get()
   @HttpCode(HttpStatus.OK)
   findAll(
@@ -79,5 +109,11 @@ export class FoldersController {
       throw new BadRequestException('Tên bộ sưu tập không được để trống');
     }
     return this.foldersService.generateFolderWithFlashcards(request.user.id, folderName.trim());
+  }
+
+  @Patch(':id/toggle-public')
+  @HttpCode(HttpStatus.OK)
+  togglePublic(@Request() request, @Param('id') id: string) {
+    return this.foldersService.togglePublic(request.user.id, id);
   }
 }

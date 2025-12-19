@@ -77,7 +77,7 @@ export function DashboardSidebar() {
     <Sidebar>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <span className="font-bold text-xl text-primary">ToeUp</span>
+          <span className="font-bold text-xl text-primary">FlashUp</span>
         </div>
       </SidebarHeader>
       <SidebarContent>

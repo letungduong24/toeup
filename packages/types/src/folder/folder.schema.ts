@@ -7,6 +7,8 @@ export const folderSchema = z.object({
   name: z.string().min(1, "Tên folder không được để trống"),
   description: z.string().nullable().optional(),
   user_id: z.cuid(),
+  isPublic: z.boolean().default(false),
+  saves: z.number().int().nonnegative().default(0),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
 });

@@ -40,7 +40,7 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
   }, [flashcard]);
 
   const playWordSound = async () => {
-    if (isMock || isPlayingWord) return;
+    if (isPlayingWord) return;
     
     setIsPlayingWord(true);
     try {

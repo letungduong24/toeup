@@ -12,9 +12,10 @@ interface MiniFlashcardProps {
   flashcard: FlashcardResponse;
   onDelete?: () => void;
   onEdit?: () => void;
+  readOnly?: boolean;
 }
 
-const MiniFlashcard: React.FC<MiniFlashcardProps> = ({ flashcard, onDelete, onEdit }) => {
+const MiniFlashcard: React.FC<MiniFlashcardProps> = ({ flashcard, onDelete, onEdit, readOnly = false }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -115,21 +116,24 @@ const MiniFlashcard: React.FC<MiniFlashcardProps> = ({ flashcard, onDelete, onEd
         flashcard={flashcard}
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        onDelete={onDelete}
-        onEdit={handleEdit}
+        onDelete={readOnly ? undefined : onDelete}
+        onEdit={readOnly ? undefined : handleEdit}
+        previewMode={readOnly}
       />
       
-      <EditFlashcardModal
-        flashcard={flashcard}
-        open={isEditModalOpen}
-        onOpenChange={(open) => {
-          setIsEditModalOpen(open);
-          if (!open && onEdit) {
-            onEdit();
-          }
-        }}
-        onSuccess={onEdit}
-      />
+      {!readOnly && (
+        <EditFlashcardModal
+          flashcard={flashcard}
+          open={isEditModalOpen}
+          onOpenChange={(open) => {
+            setIsEditModalOpen(open);
+            if (!open && onEdit) {
+              onEdit();
+            }
+          }}
+          onSuccess={onEdit}
+        />
+      )}
     </>
   );
 };

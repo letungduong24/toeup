@@ -24,6 +24,7 @@ interface FlashcardModalProps {
   onOpenChange: (open: boolean) => void;
   onEdit?: (flashcard: FlashcardResponse) => void;
   onDelete?: () => void;
+  previewMode?: boolean;
 }
 
 const FlashcardModal: React.FC<FlashcardModalProps> = ({ 
@@ -31,7 +32,8 @@ const FlashcardModal: React.FC<FlashcardModalProps> = ({
   open, 
   onOpenChange,
   onEdit,
-  onDelete
+  onDelete,
+  previewMode = false
 }) => {
   const [isPlayingWord, setIsPlayingWord] = useState(false);
   const { updateFlashcard, deleteFlashcard, updateLoading, deleteLoading } = useFlashcardStore();
@@ -169,34 +171,36 @@ const FlashcardModal: React.FC<FlashcardModalProps> = ({
         </div>
 
         {/* Footer cố định */}
-        <div className="flex-shrink-0 flex justify-center pt-4 border-t">
-          <ButtonGroup>
-            <Button 
-              variant="outline" 
-              onClick={handleEdit}
-              disabled={updateLoading || deleteLoading}
-            >
-              <FaEdit />
-              Sửa
-            </Button>
-            <Button 
-              variant="outline" 
-              onClick={handleResetReviewCount}
-              disabled={updateLoading || deleteLoading}
-            >
-              <RotateCcw />
-              Reset lần học
-            </Button>
-            <Button 
-              variant="outline" 
-              onClick={handleDelete}
-              disabled={updateLoading || deleteLoading}
-            >
-              <MdDelete />
-              Xóa
-            </Button>
-          </ButtonGroup>
-        </div>
+        {!previewMode && (
+          <div className="flex-shrink-0 flex justify-center pt-4 border-t">
+            <ButtonGroup>
+              <Button 
+                variant="outline" 
+                onClick={handleEdit}
+                disabled={updateLoading || deleteLoading || !onEdit}
+              >
+                <FaEdit />
+                Sửa
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleResetReviewCount}
+                disabled={updateLoading || deleteLoading}
+              >
+                <RotateCcw />
+                Reset lần học
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleDelete}
+                disabled={updateLoading || deleteLoading || !onDelete}
+              >
+                <MdDelete />
+                Xóa
+              </Button>
+            </ButtonGroup>
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );

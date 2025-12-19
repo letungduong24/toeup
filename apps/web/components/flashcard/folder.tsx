@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
@@ -12,13 +12,19 @@ interface FolderProps {
   folder: FolderResponse;
   isSummaryMode?: boolean;
   mode?: 'review' | 'new';
+  isExplore?: boolean;
 }
 
-const Folder: React.FC<FolderProps> = ({ folder, isSummaryMode = false, mode }) => {
+const Folder: React.FC<FolderProps> = ({ folder, isSummaryMode = false, mode, isExplore = false }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleStudy = () => {
-    router.push(`/dashboard/flashcard/folder/${folder.id}`);
+    if (isExplore || pathname?.includes('/explore')) {
+      router.push(`/dashboard/explore/folder/${folder.id}`);
+    } else {
+      router.push(`/dashboard/flashcard/folder/${folder.id}`);
+    }
   };
 
   return (
@@ -59,7 +65,7 @@ const Folder: React.FC<FolderProps> = ({ folder, isSummaryMode = false, mode }) 
           </div>
           <div className='px-6'>
             <motion.div 
-              className="flex justify-end items-center gap-2"
+              className="flex justify-end items-center gap-2 flex-wrap"
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35, duration: 0.4 }}
@@ -70,6 +76,11 @@ const Folder: React.FC<FolderProps> = ({ folder, isSummaryMode = false, mode }) 
               <Badge variant="secondary">
                 {folder.reviewCount} cần review
               </Badge>
+              {folder.saves !== undefined && folder.saves > 0 && (
+                <Badge variant="outline">
+                  {folder.saves} lượt lưu
+                </Badge>
+              )}
             </motion.div>
           </div>
         </div>
@@ -92,7 +103,7 @@ const Folder: React.FC<FolderProps> = ({ folder, isSummaryMode = false, mode }) 
           </CardHeader>
           <CardContent>
             <motion.div 
-              className="flex justify-end items-center gap-2"
+              className="flex justify-end items-center gap-2 flex-wrap"
               initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35, duration: 0.4 }}
@@ -103,6 +114,11 @@ const Folder: React.FC<FolderProps> = ({ folder, isSummaryMode = false, mode }) 
               <Badge variant="secondary">
                 {folder.reviewCount} cần review
               </Badge>
+              {folder.saves !== undefined && folder.saves > 0 && (
+                <Badge variant="outline">
+                  {folder.saves} lượt lưu
+                </Badge>
+              )}
             </motion.div>
           </CardContent>
         </Card>

@@ -24,7 +24,7 @@ interface Footer2Props {
 }
 
 const Footer2 = ({
-  tagline = "ToeUp.",
+  tagline = "FlashUp.",
   menuItems = [
     {
       title: "Dịch vụ",
@@ -35,7 +35,7 @@ const Footer2 = ({
       ],
     },
     {
-      title: "ToeUp",
+      title: "FlashUp",
       links: [
         { text: "Về chúng tôi", url: "#" },
         { text: "Liên hệ", url: "#" },
@@ -51,7 +51,7 @@ const Footer2 = ({
       ],
     },
   ],
-  copyright = "© 2025 toeup. All rights reserved.",
+  copyright = "© 2025 flashup. All rights reserved.",
 }: Footer2Props) => {
   return (
     <section className="w-full flex justify-center z-20">

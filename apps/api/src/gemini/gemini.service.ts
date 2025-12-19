@@ -58,7 +58,7 @@ Yêu cầu:
 
     try {
       const response = await this.genAI.models.generateContent({
-        model: 'gemini-2.5-flash-lite',
+        model: 'gemma-3-27b-it',
         contents: prompt,
       });
       
@@ -142,7 +142,7 @@ Chỉ trả về JSON, không có text thừa. Đảm bảo JSON hợp lệ.`;
 
     try {
       const response = await this.genAI.models.generateContent({
-        model: 'gemini-2.5-flash-lite',
+        model: 'gemma-3-27b-it',
         contents: prompt,
       });
       

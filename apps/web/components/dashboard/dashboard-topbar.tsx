@@ -25,8 +25,7 @@ import { LogOut, User, ChevronDown, Home, BookOpen, FileText, BarChart3, Setting
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard' },
   { href: '/dashboard/flashcard', label: 'Flashbook' },
-  { href: '/dashboard/practice', label: 'Luyện đề' },
-  { href: '/dashboard/statistics', label: 'Thống kê' },
+  { href: '/dashboard/explore', label: 'Khám phá' },
   { href: '/dashboard/settings', label: 'Cài đặt' },
 ];
 
@@ -121,7 +120,7 @@ export const DashboardTopbar = React.forwardRef<HTMLElement, React.HTMLAttribute
                 href="/"
                 className="flex items-center justify-center rounded-full bg-background text-sm font-bold cursor-pointer no-underline"
               >
-                <span className="font-bold text-xl hover:text-orange-600 transition-colors text-orange-500">toeup.</span>
+                <span className="font-bold text-xl hover:text-orange-600 transition-colors text-orange-500">flashup.</span>
               </Link>
             </div>
 

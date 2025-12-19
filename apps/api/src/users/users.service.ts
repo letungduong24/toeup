@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ConflictException } from '@nestjs/common';
 import { SignUpRequest } from '@repo/types';
 import { hashPassword } from 'src/lib/bcrypt.util';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -14,7 +14,7 @@ export class UsersService {
     });
 
     if (user) {
-      throw new Error('Người dùng đã tồn tại');
+      throw new ConflictException('Email đã được sử dụng');
     }
 
     const hashedPassword = await hashPassword(signUpRequest.password);

@@ -94,6 +94,8 @@ export const FolderScalarFieldEnum = {
   name: 'name',
   description: 'description',
   user_id: 'user_id',
+  isPublic: 'isPublic',
+  saves: 'saves',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
