@@ -21,17 +21,20 @@ export const flashcardSchema = z.object({
 export type Flashcard = z.infer<typeof flashcardSchema>;
 
 // Flashcard request schema (for creating/updating)
-export const flashcardRequestSchema = flashcardSchema.omit({
-  id: true,
-  review_count: true,
-}).extend({
+export const flashcardRequestSchema = z.object({
+  name: z.string().min(1, "Tên flashcard không được để trống"),
+  meaning: z.string().min(1, "Ý nghĩa không được để trống"),
+  folder_id: z.cuid().nullable().optional(),
+  audio_url: z.string().nullable().optional(),
+  usage: z.array(usageSchema).nullable().optional(),
+  nextReview: z.coerce.date().nullable().optional(),
+  // Optional fields with defaults
   review_count: z.number().int().nonnegative().optional(),
   status: z.enum(["new", "review"]).optional(),
   interval: z.number().nonnegative().optional(),
-  nextReview: z.coerce.date().nullable().optional(),
   easeFactor: z.number().min(1.3).optional(),
   lapseCount: z.number().int().nonnegative().optional(),
-  tags: z.array(z.string()).default([]).optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 export type FlashcardRequest = z.infer<typeof flashcardRequestSchema>;

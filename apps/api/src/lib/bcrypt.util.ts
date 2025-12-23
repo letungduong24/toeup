@@ -1,4 +1,7 @@
 import * as bcrypt from 'bcrypt';
+import { Logger } from '@nestjs/common';
+
+const logger = new Logger('BcryptUtil');
 
 /**
  * Hash a password using bcrypt
@@ -48,12 +51,33 @@ export async function validatePassword(
   plainPassword: string,
   storedPassword: string
 ): Promise<boolean> {
+  if (!plainPassword || !storedPassword) {
+    logger.error('validatePassword: Missing password parameters');
+    return false;
+  }
+
   if (isBcryptHash(storedPassword)) {
     // Password is hashed, use bcrypt.compare
-    return comparePassword(plainPassword, storedPassword);
+    try {
+      logger.debug(`Comparing password - plain length: ${plainPassword.length}, hash length: ${storedPassword.length}`);
+      const result = await comparePassword(plainPassword, storedPassword);
+      if (!result) {
+        logger.error('bcrypt.compare returned false');
+        logger.error(`Plain password length: ${plainPassword.length}`);
+        logger.error(`Stored password length: ${storedPassword.length}`);
+        logger.error(`Stored password preview: ${storedPassword.substring(0, 30)}`);
+      } else {
+        logger.debug('bcrypt.compare returned true');
+      }
+      return result;
+    } catch (error) {
+      logger.error('Error in bcrypt.compare:', error);
+      return false;
+    }
   } else {
     // Password is not hashed (temporary), compare directly
     // TODO: Remove this when all passwords are hashed
+    logger.warn('Password is not hashed, comparing directly');
     return plainPassword === storedPassword;
   }
 }

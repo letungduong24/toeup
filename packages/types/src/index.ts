@@ -15,3 +15,52 @@ export * from "./flashcard/flashcard.schema";
 
 // Practice
 export * from "./practice/practice.schema";
+
+// Exam - export specific types to avoid conflicts with practice schema
+export {
+  examSchema,
+  examRequestSchema,
+  examResponseSchema,
+  sectionSchema,
+  sectionRequestSchema,
+  sectionResponseSchema,
+  groupSchema,
+  groupRequestSchema,
+  groupResponseSchema,
+  questionOptionSchema,
+  questionSchema as examQuestionSchema,
+  questionRequestSchema as examQuestionRequestSchema,
+  questionResponseSchema as examQuestionResponseSchema,
+  questionWithAnswerSchema as examQuestionWithAnswerSchema,
+  sectionWithRelationsSchema,
+  examResultSchema,
+  examResultRequestSchema,
+  examResultResponseSchema,
+  examAnswerSchema,
+  examSessionSchema,
+  createExamFormSchema,
+} from "./exam/exam.schema";
+
+export type {
+  Exam,
+  ExamRequest,
+  ExamResponse,
+  Section,
+  SectionRequest,
+  SectionResponse,
+  Group,
+  GroupRequest,
+  GroupResponse,
+  QuestionOption,
+  Question as ExamQuestion,
+  QuestionRequest as ExamQuestionRequest,
+  QuestionResponse as ExamQuestionResponse,
+  QuestionWithAnswer as ExamQuestionWithAnswer,
+  SectionWithRelations,
+  ExamResult,
+  ExamResultRequest,
+  ExamResultResponse,
+  ExamAnswer,
+  ExamSession,
+  CreateExamForm,
+} from "./exam/exam.schema";

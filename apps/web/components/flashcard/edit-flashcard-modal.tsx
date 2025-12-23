@@ -48,7 +48,7 @@ const EditFlashcardModal: React.FC<EditFlashcardModalProps> = ({
     control,
     watch,
   } = useForm<FlashcardRequest>({
-    resolver: zodResolver(flashcardRequestSchema),
+    resolver: zodResolver(flashcardRequestSchema) as any,
     defaultValues: {
       name: '',
       meaning: '',

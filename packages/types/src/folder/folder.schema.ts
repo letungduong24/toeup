@@ -21,6 +21,9 @@ export const folderRequestSchema = folderSchema.omit({
   user_id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  isPublic: z.boolean().default(false).optional(),
+  saves: z.number().int().nonnegative().default(0).optional(),
 });
 
 export type FolderRequest = z.infer<typeof folderRequestSchema>;

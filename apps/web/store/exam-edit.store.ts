@@ -6,8 +6,8 @@ import {
   SectionRequest,
   GroupResponse,
   GroupRequest,
-  QuestionResponse,
-  QuestionRequest,
+  ExamQuestionResponse as QuestionResponse,
+  ExamQuestionRequest as QuestionRequest,
 } from '@repo/types';
 
 interface ExamEditState {

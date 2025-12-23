@@ -1,33 +1,48 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, Logger } from '@nestjs/common';
 import { SignUpRequest } from '@repo/types';
 import { hashPassword } from 'src/lib/bcrypt.util';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+
   constructor(private readonly prisma: PrismaService) {
     
   }
   async create(signUpRequest: SignUpRequest) {
-    const user = await this.prisma.user.findUnique({
+    const existingUser = await this.prisma.user.findUnique({
       where: { email: signUpRequest.email },
     });
 
-    if (user) {
+    if (existingUser) {
       throw new ConflictException('Email đã được sử dụng');
     }
 
     const hashedPassword = await hashPassword(signUpRequest.password);
+    this.logger.debug(`Hashed password for ${signUpRequest.email}, hash length: ${hashedPassword.length}, starts with: ${hashedPassword.substring(0, 7)}`);
+    
+    // Ensure password is properly hashed and not overwritten by spread
+    const { password: _, ...restSignUpData } = signUpRequest;
 
-    return this.prisma.user.create({
+    const newUser = await this.prisma.user.create({
       data: {
-        ...signUpRequest,
+        ...restSignUpData,
         password: hashedPassword,
       },
       omit: {
         password: true,
       }
     });
+
+    // Verify password was saved correctly
+    const savedUser = await this.prisma.user.findUnique({
+      where: { id: newUser.id },
+      select: { password: true }
+    });
+    this.logger.debug(`Saved password hash length: ${savedUser?.password?.length}, starts with: ${savedUser?.password?.substring(0, 7)}`);
+
+    return newUser;
   }
 
   findAll() {
