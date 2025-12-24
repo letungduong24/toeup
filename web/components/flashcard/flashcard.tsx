@@ -102,10 +102,13 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
       }}
     >
       <Card className="w-full rounded-2xl">
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full p-3 md:p-4">
           <AccordionItem value="flashcard-content" className="border-0">
-             <AccordionTrigger className="px-6 py-4 hover:no-underline">
-               <div className="flex items-center justify-between w-full pr-4">
+            <div className="">
+              
+            </div>
+             <AccordionTrigger className="hover:no-underline flex items-center w-full">
+               <div className="flex flex-col md:flex-row items-center justify-center md:justify-between w-full flex-wrap gap-2 ">
                  <div className="flex items-center gap-2">
                    <h2 className="text-3xl font-bold">{currentFlashcard.name}</h2>
                    <div
@@ -144,7 +147,7 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
                 </div>
                </div>
              </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6">
+            <AccordionContent className="p-3">
               <div className="flex flex-col gap-4">
                 {/* Nghĩa */}
                 <div className="text-center py-2 border-b">

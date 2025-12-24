@@ -1,6 +1,20 @@
 'use client';
 import { Button } from '../ui/button';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/store/auth.store';
+
 const Hero = () => {
+  const router = useRouter();
+  const { user } = useAuthStore();
+
+  const handleStart = () => {
+    if (user) {
+      router.push('/dashboard');
+    } else {
+      router.push('/signin');
+    }
+  };
+
   return (
     <div className="z-20 flex flex-col items-center mt-5 gap-3">
         <div className='text-foreground flex flex-col items-center gap-2 text-center mx-4'>
@@ -8,7 +22,13 @@ const Hero = () => {
             <p>Học tiếng Anh cùng AI mọi lúc, mọi nơi, tiến bộ từng ngày.</p>
         </div>
         <div className='flex gap-3'>
-            <Button size='lg' className='bg-primary text-primary-foreground hover:bg-primary/90'>Bắt đầu</Button>
+            <Button 
+              size='lg' 
+              className='bg-primary text-primary-foreground hover:bg-primary/90'
+              onClick={handleStart}
+            >
+              Bắt đầu
+            </Button>
         </div>
     </div>
   )

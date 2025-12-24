@@ -149,7 +149,7 @@ export const Navbar01 = React.forwardRef<HTMLElement, Navbar01Props>(
               {/* Brand/Logo */}
               <Link 
                 href={logoHref || '/'}
-                className="flex items-center justify-center rounded-full bg-background text-sm font-bold cursor-pointer no-underline"
+                className="flex items-center justify-center rounded-full text-sm font-bold cursor-pointer no-underline"
               >
                 {logo || <span className="font-bold text-xl hover:text-orange-600 transition-colors text-orange-500">flashup.</span>}
               </Link>

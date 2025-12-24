@@ -117,7 +117,7 @@ export const DashboardTopbar = React.forwardRef<HTMLElement, React.HTMLAttribute
               {/* Brand/Logo */}
               <Link 
                 href="/"
-                className="flex items-center justify-center rounded-full bg-background text-sm font-bold cursor-pointer no-underline"
+                className="flex items-center justify-center rounded-full text-sm font-bold cursor-pointer no-underline"
               >
                 <span className="font-bold text-xl hover:text-orange-600 transition-colors text-orange-500">flashup.</span>
               </Link>

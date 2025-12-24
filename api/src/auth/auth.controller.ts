@@ -29,11 +29,11 @@ export class AuthController {
     const access_token = await this.authService.login(request.user);
 
     res.cookie('access_token', access_token, {
-      httpOnly: true,
+      httpOnly: true, 
       // Only set secure when explicitly enabled (e.g. HTTPS). For HTTP/IP deployment, keep false.
       secure: process.env.COOKIE_SECURE === 'true',
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
       path: '/',
     });
 
@@ -48,7 +48,7 @@ export class AuthController {
   ) {
     const { user, access_token } = await this.authService.signUp(signUpDto);
     res.cookie('access_token', access_token, {
-      httpOnly: true,
+      httpOnly: true, 
       secure: process.env.COOKIE_SECURE === 'true',
       sameSite: 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,

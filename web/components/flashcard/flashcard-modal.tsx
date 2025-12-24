@@ -96,7 +96,7 @@ const FlashcardModal: React.FC<FlashcardModalProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[85vh] mx-4 flex flex-col overflow-hidden" showCloseButton={false}>
+      <DialogContent className="max-w-[min(42rem,calc(100%-2rem))] max-h-[85vh] flex flex-col overflow-hidden" showCloseButton={false}>
         {/* Header cố định */}
         <DialogHeader className="flex-shrink-0">
           <div className="flex items-center justify-center gap-2">
