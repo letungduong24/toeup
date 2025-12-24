@@ -20,7 +20,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 import { IoMenuOutline } from "react-icons/io5";
 import useAuthStore from '@/store/auth.store';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { LogOut, User, ChevronDown, Home, BookOpen, FileText, BarChart3 } from 'lucide-react';
+import { LogOut, User, ChevronDown, Home, BookOpen, FileText, BarChart3, Play } from 'lucide-react';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard' },
@@ -98,24 +98,37 @@ export const DashboardTopbar = React.forwardRef<HTMLElement, React.HTMLAttribute
                           <NavigationMenuItem key={index} className="w-full">
                             <Link
                               href={link.href}
-                            className={cn(
-                              "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer no-underline",
-                              pathname === link.href 
-                                ? "bg-orange-500 text-white hover:bg-orange-600" 
-                                : "text-foreground/80"
-                            )}
+                              className={cn(
+                                "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer no-underline",
+                                pathname === link.href
+                                  ? "bg-orange-500 text-white hover:bg-orange-600"
+                                  : "text-foreground/80"
+                              )}
                             >
                               {link.label}
                             </Link>
                           </NavigationMenuItem>
                         ))}
+                        <NavigationMenuItem className="w-full">
+                          <Link
+                            href="/dashboard/practice"
+                            className={cn(
+                              "flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer no-underline",
+                              pathname === '/dashboard/practice'
+                                ? "bg-orange-500 text-white hover:bg-orange-600"
+                                : "text-foreground/80"
+                            )}
+                          >
+                            Luyện tập
+                          </Link>
+                        </NavigationMenuItem>
                       </NavigationMenuList>
                     </NavigationMenu>
                   </PopoverContent>
                 </Popover>
               )}
               {/* Brand/Logo */}
-              <Link 
+              <Link
                 href="/"
                 className="flex items-center justify-center rounded-full text-sm font-bold cursor-pointer no-underline"
               >
@@ -134,8 +147,8 @@ export const DashboardTopbar = React.forwardRef<HTMLElement, React.HTMLAttribute
                           href={link.href}
                           className={cn(
                             "group inline-flex h-9 items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors cursor-pointer no-underline",
-                            pathname === link.href 
-                              ? "bg-orange-500 text-white hover:bg-orange-600" 
+                            pathname === link.href
+                              ? "bg-orange-500 text-white hover:bg-orange-600"
                               : "text-foreground/80 hover:bg-accent hover:text-foreground"
                           )}
                         >
@@ -143,6 +156,19 @@ export const DashboardTopbar = React.forwardRef<HTMLElement, React.HTMLAttribute
                         </Link>
                       </NavigationMenuItem>
                     ))}
+                    <NavigationMenuItem>
+                      <Link
+                        href="/dashboard/practice"
+                        className={cn(
+                          "group inline-flex h-9 items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors cursor-pointer no-underline",
+                          pathname === '/dashboard/practice'
+                            ? "bg-orange-500 text-white hover:bg-orange-600"
+                            : "text-foreground/80 hover:bg-accent hover:text-foreground"
+                        )}
+                      >
+                        Luyện tập
+                      </Link>
+                    </NavigationMenuItem>
                   </NavigationMenuList>
                 </NavigationMenu>
               </div>

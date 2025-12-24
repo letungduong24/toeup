@@ -39,7 +39,7 @@ export default function MultipleChoicePracticePage() {
   } = useMultipleChoiceStore();
 
   const [localIsPlayingAudio, setLocalIsPlayingAudio] = useState(false);
-  
+
   const {
     selectedOption,
     setSelectedOption: setSelectedOptionStore,
@@ -56,12 +56,12 @@ export default function MultipleChoicePracticePage() {
   // Initialize or restore session (only once)
   useEffect(() => {
     let isMounted = true;
-    
+
     const initializeOrRestoreSession = async () => {
       try {
         const sessionIdFromUrl = searchParams.get('sessionId');
-        const sessionIdToRestore = sessionIdFromUrl || 
-          (typeof window !== 'undefined' 
+        const sessionIdToRestore = sessionIdFromUrl ||
+          (typeof window !== 'undefined'
             ? localStorage.getItem(`practice:multiple-choice:session:${folderId}`)
             : null);
 
@@ -127,7 +127,7 @@ export default function MultipleChoicePracticePage() {
 
   const handleSelectOption = async (option: string) => {
     if (isAnswered || submitting || !option) return;
-    
+
     setSelectedOptionStore(option);
     try {
       await submitAnswer(option);
@@ -157,7 +157,7 @@ export default function MultipleChoicePracticePage() {
 
   const handlePlayAudio = async () => {
     if (!questions[currentIndex] || localIsPlayingAudio) return;
-    
+
     setLocalIsPlayingAudio(true);
     try {
       await playAudioWithFallback(
@@ -302,11 +302,11 @@ export default function MultipleChoicePracticePage() {
         <CardHeader>
           <CardTitle className="text-xl">Trắc nghiệm</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4">
           {/* Question */}
           <div className="space-y-2">
             <p className="text-sm text-muted-foreground">Nghĩa của từ:</p>
-            <p className="text-2xl font-semibold">{currentQuestion.question}</p>
+            <p className="text-lg font-semibold">{currentQuestion.question}</p>
           </div>
 
           {/* Options */}
@@ -341,11 +341,11 @@ export default function MultipleChoicePracticePage() {
                 className="space-y-4"
               >
                 {/* Result Icon */}
-                <div className="flex items-center justify-center py-4">
+                <div className="flex items-center justify-center py-2">
                   {isCorrect ? (
-                    <CheckCircle2 className="h-16 w-16 text-green-500" />
+                    <CheckCircle2 className="h-10 w-10 text-green-500" />
                   ) : (
-                    <XCircle className="h-16 w-16 text-red-500" />
+                    <XCircle className="h-10 w-10 text-red-500" />
                   )}
                 </div>
 
