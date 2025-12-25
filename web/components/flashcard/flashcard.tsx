@@ -13,7 +13,7 @@ import { FlashcardResponse } from '@/types/flashcard';
 import useFlashcardStore from "@/store/flashcard.store";
 import { playAudioWithFallback } from "@/lib/audio-utils";
 
-type StudyAction = 
+type StudyAction =
   | 'new_forgot'
   | 'new_good'
   | 'review_forgot'
@@ -41,7 +41,7 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
 
   const playWordSound = async () => {
     if (isPlayingWord) return;
-    
+
     setIsPlayingWord(true);
     try {
       await playAudioWithFallback(
@@ -51,6 +51,7 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
       );
     } catch (error) {
       console.error('Error playing audio:', error);
+      toast.error("Trình duyệt của bạn không hỗ trợ âm thanh này");
     } finally {
       setIsPlayingWord(false);
     }
@@ -58,9 +59,9 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
 
   const handleStudyActionClick = async (action: StudyAction) => {
     if (isMock || studyLoading || submittingAction !== null) return;
-    
+
     setSubmittingAction(action);
-    
+
     try {
       await handleStudyAction(currentFlashcard.id, action);
       // Call callback to notify parent (study page) that action is complete
@@ -82,18 +83,18 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
     <motion.div
       className="w-full"
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
-      animate={{ 
-        opacity: 1, 
-        scale: 1, 
+      animate={{
+        opacity: 1,
+        scale: 1,
         y: 0,
         transition: {
           duration: 0.3,
           ease: [0.4, 0, 0.2, 1],
         }
       }}
-      exit={{ 
-        opacity: 0, 
-        scale: 0.95, 
+      exit={{
+        opacity: 0,
+        scale: 0.95,
         y: -20,
         transition: {
           duration: 0.25,
@@ -105,32 +106,32 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
         <Accordion type="single" collapsible className="w-full p-3 md:p-4">
           <AccordionItem value="flashcard-content" className="border-0">
             <div className="">
-              
+
             </div>
-             <AccordionTrigger className="hover:no-underline flex items-center w-full">
-               <div className="flex flex-col md:flex-row items-center justify-center md:justify-between w-full flex-wrap gap-2 ">
-                 <div className="flex items-center gap-2">
-                   <h2 className="text-3xl font-bold">{currentFlashcard.name}</h2>
-                   <div
-                     className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9"
-                     onClick={(e) => {
-                       e.stopPropagation();
-                       playWordSound();
-                     }}
-                     role="button"
-                     tabIndex={0}
-                     onKeyDown={(e) => {
-                       if (e.key === 'Enter' || e.key === ' ') {
-                         e.stopPropagation();
-                         e.preventDefault();
-                         playWordSound();
-                       }
-                     }}
-                     aria-label="Phát âm"
-                   >
-                     <FaVolumeLow className={isPlayingWord ? 'animate-pulse' : ''} />
-                   </div>
-                 </div>
+            <AccordionTrigger className="hover:no-underline flex items-center w-full">
+              <div className="flex flex-col md:flex-row items-center justify-center md:justify-between w-full flex-wrap gap-2 ">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-3xl font-bold">{currentFlashcard.name}</h2>
+                  <div
+                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 w-9"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      playWordSound();
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        playWordSound();
+                      }
+                    }}
+                    aria-label="Phát âm"
+                  >
+                    <FaVolumeLow className={isPlayingWord ? 'animate-pulse' : ''} />
+                  </div>
+                </div>
                 <div className="flex items-center gap-2">
                   <Badge>Đã học {currentFlashcard.review_count} lần</Badge>
                   {currentFlashcard.status === "new" && (
@@ -145,15 +146,15 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
                     </Badge>
                   )}
                 </div>
-               </div>
-             </AccordionTrigger>
+              </div>
+            </AccordionTrigger>
             <AccordionContent className="p-3">
               <div className="flex flex-col gap-4">
                 {/* Nghĩa */}
                 <div className="text-center py-2 border-b">
                   <p className="text-base text-muted-foreground">{currentFlashcard.meaning}</p>
                 </div>
-                
+
                 {/* Nội dung scroll được */}
                 <div className="max-h-[400px] overflow-y-auto">
                   <div className="w-full flex flex-col gap-4 items-center justify-center py-4">
@@ -176,7 +177,7 @@ const FlashCard: React.FC<FlashCardProps> = ({ flashcard, isMock = false, onStud
                         ))}
                       </div>
                     )}
-                    
+
                     {currentFlashcard.tags && currentFlashcard.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 justify-center">
                         {currentFlashcard.tags.map((tag, index) => (

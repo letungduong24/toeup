@@ -27,24 +27,23 @@ export type AggregatePracticeSession = {
 }
 
 export type PracticeSessionAvgAggregateOutputType = {
-  folderVersion: number | null
   currentIndex: number | null
   correctCount: number | null
   incorrectCount: number | null
+  folderVersion: number | null
 }
 
 export type PracticeSessionSumAggregateOutputType = {
-  folderVersion: number | null
   currentIndex: number | null
   correctCount: number | null
   incorrectCount: number | null
+  folderVersion: number | null
 }
 
 export type PracticeSessionMinAggregateOutputType = {
   id: string | null
   userId: string | null
   folderId: string | null
-  folderVersion: number | null
   mode: string | null
   status: string | null
   currentIndex: number | null
@@ -55,13 +54,13 @@ export type PracticeSessionMinAggregateOutputType = {
   endTime: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  folderVersion: number | null
 }
 
 export type PracticeSessionMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   folderId: string | null
-  folderVersion: number | null
   mode: string | null
   status: string | null
   currentIndex: number | null
@@ -72,13 +71,13 @@ export type PracticeSessionMaxAggregateOutputType = {
   endTime: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  folderVersion: number | null
 }
 
 export type PracticeSessionCountAggregateOutputType = {
   id: number
   userId: number
   folderId: number
-  folderVersion: number
   mode: number
   status: number
   currentIndex: number
@@ -89,29 +88,29 @@ export type PracticeSessionCountAggregateOutputType = {
   endTime: number
   createdAt: number
   updatedAt: number
+  folderVersion: number
   _all: number
 }
 
 
 export type PracticeSessionAvgAggregateInputType = {
-  folderVersion?: true
   currentIndex?: true
   correctCount?: true
   incorrectCount?: true
+  folderVersion?: true
 }
 
 export type PracticeSessionSumAggregateInputType = {
-  folderVersion?: true
   currentIndex?: true
   correctCount?: true
   incorrectCount?: true
+  folderVersion?: true
 }
 
 export type PracticeSessionMinAggregateInputType = {
   id?: true
   userId?: true
   folderId?: true
-  folderVersion?: true
   mode?: true
   status?: true
   currentIndex?: true
@@ -122,13 +121,13 @@ export type PracticeSessionMinAggregateInputType = {
   endTime?: true
   createdAt?: true
   updatedAt?: true
+  folderVersion?: true
 }
 
 export type PracticeSessionMaxAggregateInputType = {
   id?: true
   userId?: true
   folderId?: true
-  folderVersion?: true
   mode?: true
   status?: true
   currentIndex?: true
@@ -139,13 +138,13 @@ export type PracticeSessionMaxAggregateInputType = {
   endTime?: true
   createdAt?: true
   updatedAt?: true
+  folderVersion?: true
 }
 
 export type PracticeSessionCountAggregateInputType = {
   id?: true
   userId?: true
   folderId?: true
-  folderVersion?: true
   mode?: true
   status?: true
   currentIndex?: true
@@ -156,6 +155,7 @@ export type PracticeSessionCountAggregateInputType = {
   endTime?: true
   createdAt?: true
   updatedAt?: true
+  folderVersion?: true
   _all?: true
 }
 
@@ -249,7 +249,6 @@ export type PracticeSessionGroupByOutputType = {
   id: string
   userId: string
   folderId: string
-  folderVersion: number
   mode: string
   status: string
   currentIndex: number
@@ -260,6 +259,7 @@ export type PracticeSessionGroupByOutputType = {
   endTime: Date | null
   createdAt: Date
   updatedAt: Date
+  folderVersion: number
   _count: PracticeSessionCountAggregateOutputType | null
   _avg: PracticeSessionAvgAggregateOutputType | null
   _sum: PracticeSessionSumAggregateOutputType | null
@@ -289,7 +289,6 @@ export type PracticeSessionWhereInput = {
   id?: Prisma.StringFilter<"PracticeSession"> | string
   userId?: Prisma.StringFilter<"PracticeSession"> | string
   folderId?: Prisma.StringFilter<"PracticeSession"> | string
-  folderVersion?: Prisma.IntFilter<"PracticeSession"> | number
   mode?: Prisma.StringFilter<"PracticeSession"> | string
   status?: Prisma.StringFilter<"PracticeSession"> | string
   currentIndex?: Prisma.IntFilter<"PracticeSession"> | number
@@ -300,17 +299,17 @@ export type PracticeSessionWhereInput = {
   endTime?: Prisma.DateTimeNullableFilter<"PracticeSession"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PracticeSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PracticeSession"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  folderVersion?: Prisma.IntFilter<"PracticeSession"> | number
   folder?: Prisma.XOR<Prisma.FolderScalarRelationFilter, Prisma.FolderWhereInput>
-  questions?: Prisma.PracticeSessionQuestionListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   answers?: Prisma.PracticeSessionAnswerListRelationFilter
+  questions?: Prisma.PracticeSessionQuestionListRelationFilter
 }
 
 export type PracticeSessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   folderId?: Prisma.SortOrder
-  folderVersion?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
@@ -321,10 +320,11 @@ export type PracticeSessionOrderByWithRelationInput = {
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
+  folderVersion?: Prisma.SortOrder
   folder?: Prisma.FolderOrderByWithRelationInput
-  questions?: Prisma.PracticeSessionQuestionOrderByRelationAggregateInput
+  user?: Prisma.UserOrderByWithRelationInput
   answers?: Prisma.PracticeSessionAnswerOrderByRelationAggregateInput
+  questions?: Prisma.PracticeSessionQuestionOrderByRelationAggregateInput
 }
 
 export type PracticeSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -334,7 +334,6 @@ export type PracticeSessionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PracticeSessionWhereInput | Prisma.PracticeSessionWhereInput[]
   userId?: Prisma.StringFilter<"PracticeSession"> | string
   folderId?: Prisma.StringFilter<"PracticeSession"> | string
-  folderVersion?: Prisma.IntFilter<"PracticeSession"> | number
   mode?: Prisma.StringFilter<"PracticeSession"> | string
   status?: Prisma.StringFilter<"PracticeSession"> | string
   currentIndex?: Prisma.IntFilter<"PracticeSession"> | number
@@ -345,17 +344,17 @@ export type PracticeSessionWhereUniqueInput = Prisma.AtLeast<{
   endTime?: Prisma.DateTimeNullableFilter<"PracticeSession"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PracticeSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PracticeSession"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  folderVersion?: Prisma.IntFilter<"PracticeSession"> | number
   folder?: Prisma.XOR<Prisma.FolderScalarRelationFilter, Prisma.FolderWhereInput>
-  questions?: Prisma.PracticeSessionQuestionListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   answers?: Prisma.PracticeSessionAnswerListRelationFilter
+  questions?: Prisma.PracticeSessionQuestionListRelationFilter
 }, "id">
 
 export type PracticeSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   folderId?: Prisma.SortOrder
-  folderVersion?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
@@ -366,6 +365,7 @@ export type PracticeSessionOrderByWithAggregationInput = {
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  folderVersion?: Prisma.SortOrder
   _count?: Prisma.PracticeSessionCountOrderByAggregateInput
   _avg?: Prisma.PracticeSessionAvgOrderByAggregateInput
   _max?: Prisma.PracticeSessionMaxOrderByAggregateInput
@@ -380,7 +380,6 @@ export type PracticeSessionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"PracticeSession"> | string
   userId?: Prisma.StringWithAggregatesFilter<"PracticeSession"> | string
   folderId?: Prisma.StringWithAggregatesFilter<"PracticeSession"> | string
-  folderVersion?: Prisma.IntWithAggregatesFilter<"PracticeSession"> | number
   mode?: Prisma.StringWithAggregatesFilter<"PracticeSession"> | string
   status?: Prisma.StringWithAggregatesFilter<"PracticeSession"> | string
   currentIndex?: Prisma.IntWithAggregatesFilter<"PracticeSession"> | number
@@ -391,11 +390,11 @@ export type PracticeSessionScalarWhereWithAggregatesInput = {
   endTime?: Prisma.DateTimeNullableWithAggregatesFilter<"PracticeSession"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PracticeSession"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PracticeSession"> | Date | string
+  folderVersion?: Prisma.IntWithAggregatesFilter<"PracticeSession"> | number
 }
 
 export type PracticeSessionCreateInput = {
   id?: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -406,17 +405,17 @@ export type PracticeSessionCreateInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
+  folderVersion?: number
   folder: Prisma.FolderCreateNestedOneWithoutPracticeSessionsInput
-  questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
+  user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutSessionInput
+  questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
 }
 
 export type PracticeSessionUncheckedCreateInput = {
   id?: string
   userId: string
   folderId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -427,13 +426,13 @@ export type PracticeSessionUncheckedCreateInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
+  folderVersion?: number
   answers?: Prisma.PracticeSessionAnswerUncheckedCreateNestedManyWithoutSessionInput
+  questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type PracticeSessionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -444,17 +443,17 @@ export type PracticeSessionUpdateInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   folder?: Prisma.FolderUpdateOneRequiredWithoutPracticeSessionsNestedInput
-  questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutSessionNestedInput
+  questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   folderId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -465,15 +464,15 @@ export type PracticeSessionUncheckedUpdateInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   answers?: Prisma.PracticeSessionAnswerUncheckedUpdateManyWithoutSessionNestedInput
+  questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionCreateManyInput = {
   id?: string
   userId: string
   folderId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -484,11 +483,11 @@ export type PracticeSessionCreateManyInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
 }
 
 export type PracticeSessionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -499,13 +498,13 @@ export type PracticeSessionUpdateManyMutationInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type PracticeSessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   folderId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -516,6 +515,7 @@ export type PracticeSessionUncheckedUpdateManyInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type PracticeSessionListRelationFilter = {
@@ -532,7 +532,6 @@ export type PracticeSessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   folderId?: Prisma.SortOrder
-  folderVersion?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
@@ -543,20 +542,20 @@ export type PracticeSessionCountOrderByAggregateInput = {
   endTime?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  folderVersion?: Prisma.SortOrder
 }
 
 export type PracticeSessionAvgOrderByAggregateInput = {
-  folderVersion?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
   correctCount?: Prisma.SortOrder
   incorrectCount?: Prisma.SortOrder
+  folderVersion?: Prisma.SortOrder
 }
 
 export type PracticeSessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   folderId?: Prisma.SortOrder
-  folderVersion?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
@@ -567,13 +566,13 @@ export type PracticeSessionMaxOrderByAggregateInput = {
   endTime?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  folderVersion?: Prisma.SortOrder
 }
 
 export type PracticeSessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   folderId?: Prisma.SortOrder
-  folderVersion?: Prisma.SortOrder
   mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
@@ -584,13 +583,14 @@ export type PracticeSessionMinOrderByAggregateInput = {
   endTime?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  folderVersion?: Prisma.SortOrder
 }
 
 export type PracticeSessionSumOrderByAggregateInput = {
-  folderVersion?: Prisma.SortOrder
   currentIndex?: Prisma.SortOrder
   correctCount?: Prisma.SortOrder
   incorrectCount?: Prisma.SortOrder
+  folderVersion?: Prisma.SortOrder
 }
 
 export type PracticeSessionScalarRelationFilter = {
@@ -712,7 +712,6 @@ export type PracticeSessionUpdateOneRequiredWithoutAnswersNestedInput = {
 
 export type PracticeSessionCreateWithoutUserInput = {
   id?: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -723,15 +722,15 @@ export type PracticeSessionCreateWithoutUserInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
   folder: Prisma.FolderCreateNestedOneWithoutPracticeSessionsInput
-  questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutSessionInput
+  questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
 }
 
 export type PracticeSessionUncheckedCreateWithoutUserInput = {
   id?: string
   folderId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -742,8 +741,9 @@ export type PracticeSessionUncheckedCreateWithoutUserInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
+  folderVersion?: number
   answers?: Prisma.PracticeSessionAnswerUncheckedCreateNestedManyWithoutSessionInput
+  questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type PracticeSessionCreateOrConnectWithoutUserInput = {
@@ -779,7 +779,6 @@ export type PracticeSessionScalarWhereInput = {
   id?: Prisma.StringFilter<"PracticeSession"> | string
   userId?: Prisma.StringFilter<"PracticeSession"> | string
   folderId?: Prisma.StringFilter<"PracticeSession"> | string
-  folderVersion?: Prisma.IntFilter<"PracticeSession"> | number
   mode?: Prisma.StringFilter<"PracticeSession"> | string
   status?: Prisma.StringFilter<"PracticeSession"> | string
   currentIndex?: Prisma.IntFilter<"PracticeSession"> | number
@@ -790,11 +789,11 @@ export type PracticeSessionScalarWhereInput = {
   endTime?: Prisma.DateTimeNullableFilter<"PracticeSession"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"PracticeSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PracticeSession"> | Date | string
+  folderVersion?: Prisma.IntFilter<"PracticeSession"> | number
 }
 
 export type PracticeSessionCreateWithoutFolderInput = {
   id?: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -805,15 +804,15 @@ export type PracticeSessionCreateWithoutFolderInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
   user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
-  questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutSessionInput
+  questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
 }
 
 export type PracticeSessionUncheckedCreateWithoutFolderInput = {
   id?: string
   userId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -824,8 +823,9 @@ export type PracticeSessionUncheckedCreateWithoutFolderInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
+  folderVersion?: number
   answers?: Prisma.PracticeSessionAnswerUncheckedCreateNestedManyWithoutSessionInput
+  questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type PracticeSessionCreateOrConnectWithoutFolderInput = {
@@ -856,7 +856,6 @@ export type PracticeSessionUpdateManyWithWhereWithoutFolderInput = {
 
 export type PracticeSessionCreateWithoutQuestionsInput = {
   id?: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -867,8 +866,9 @@ export type PracticeSessionCreateWithoutQuestionsInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
+  folderVersion?: number
   folder: Prisma.FolderCreateNestedOneWithoutPracticeSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutSessionInput
 }
 
@@ -876,7 +876,6 @@ export type PracticeSessionUncheckedCreateWithoutQuestionsInput = {
   id?: string
   userId: string
   folderId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -887,6 +886,7 @@ export type PracticeSessionUncheckedCreateWithoutQuestionsInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
   answers?: Prisma.PracticeSessionAnswerUncheckedCreateNestedManyWithoutSessionInput
 }
 
@@ -908,7 +908,6 @@ export type PracticeSessionUpdateToOneWithWhereWithoutQuestionsInput = {
 
 export type PracticeSessionUpdateWithoutQuestionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -919,8 +918,9 @@ export type PracticeSessionUpdateWithoutQuestionsInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   folder?: Prisma.FolderUpdateOneRequiredWithoutPracticeSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutSessionNestedInput
 }
 
@@ -928,7 +928,6 @@ export type PracticeSessionUncheckedUpdateWithoutQuestionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   folderId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -939,12 +938,12 @@ export type PracticeSessionUncheckedUpdateWithoutQuestionsInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   answers?: Prisma.PracticeSessionAnswerUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionCreateWithoutAnswersInput = {
   id?: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -955,8 +954,9 @@ export type PracticeSessionCreateWithoutAnswersInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
+  folderVersion?: number
   folder: Prisma.FolderCreateNestedOneWithoutPracticeSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutPracticeSessionsInput
   questions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutSessionInput
 }
 
@@ -964,7 +964,6 @@ export type PracticeSessionUncheckedCreateWithoutAnswersInput = {
   id?: string
   userId: string
   folderId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -975,6 +974,7 @@ export type PracticeSessionUncheckedCreateWithoutAnswersInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
   questions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutSessionInput
 }
 
@@ -996,7 +996,6 @@ export type PracticeSessionUpdateToOneWithWhereWithoutAnswersInput = {
 
 export type PracticeSessionUpdateWithoutAnswersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1007,8 +1006,9 @@ export type PracticeSessionUpdateWithoutAnswersInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   folder?: Prisma.FolderUpdateOneRequiredWithoutPracticeSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
   questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
 }
 
@@ -1016,7 +1016,6 @@ export type PracticeSessionUncheckedUpdateWithoutAnswersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   folderId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1027,13 +1026,13 @@ export type PracticeSessionUncheckedUpdateWithoutAnswersInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionCreateManyUserInput = {
   id?: string
   folderId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -1044,11 +1043,11 @@ export type PracticeSessionCreateManyUserInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
 }
 
 export type PracticeSessionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1059,15 +1058,15 @@ export type PracticeSessionUpdateWithoutUserInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   folder?: Prisma.FolderUpdateOneRequiredWithoutPracticeSessionsNestedInput
-  questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutSessionNestedInput
+  questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   folderId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1078,14 +1077,14 @@ export type PracticeSessionUncheckedUpdateWithoutUserInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   answers?: Prisma.PracticeSessionAnswerUncheckedUpdateManyWithoutSessionNestedInput
+  questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   folderId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1096,12 +1095,12 @@ export type PracticeSessionUncheckedUpdateManyWithoutUserInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type PracticeSessionCreateManyFolderInput = {
   id?: string
   userId: string
-  folderVersion?: number
   mode?: string
   status?: string
   currentIndex?: number
@@ -1112,11 +1111,11 @@ export type PracticeSessionCreateManyFolderInput = {
   endTime?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  folderVersion?: number
 }
 
 export type PracticeSessionUpdateWithoutFolderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1127,15 +1126,15 @@ export type PracticeSessionUpdateWithoutFolderInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutPracticeSessionsNestedInput
-  questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutSessionNestedInput
+  questions?: Prisma.PracticeSessionQuestionUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionUncheckedUpdateWithoutFolderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1146,14 +1145,14 @@ export type PracticeSessionUncheckedUpdateWithoutFolderInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   answers?: Prisma.PracticeSessionAnswerUncheckedUpdateManyWithoutSessionNestedInput
+  questions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type PracticeSessionUncheckedUpdateManyWithoutFolderInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
   mode?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   currentIndex?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1164,6 +1163,7 @@ export type PracticeSessionUncheckedUpdateManyWithoutFolderInput = {
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  folderVersion?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -1172,13 +1172,13 @@ export type PracticeSessionUncheckedUpdateManyWithoutFolderInput = {
  */
 
 export type PracticeSessionCountOutputType = {
-  questions: number
   answers: number
+  questions: number
 }
 
 export type PracticeSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  questions?: boolean | PracticeSessionCountOutputTypeCountQuestionsArgs
   answers?: boolean | PracticeSessionCountOutputTypeCountAnswersArgs
+  questions?: boolean | PracticeSessionCountOutputTypeCountQuestionsArgs
 }
 
 /**
@@ -1194,15 +1194,15 @@ export type PracticeSessionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Ty
 /**
  * PracticeSessionCountOutputType without action
  */
-export type PracticeSessionCountOutputTypeCountQuestionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PracticeSessionQuestionWhereInput
+export type PracticeSessionCountOutputTypeCountAnswersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PracticeSessionAnswerWhereInput
 }
 
 /**
  * PracticeSessionCountOutputType without action
  */
-export type PracticeSessionCountOutputTypeCountAnswersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PracticeSessionAnswerWhereInput
+export type PracticeSessionCountOutputTypeCountQuestionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PracticeSessionQuestionWhereInput
 }
 
 
@@ -1210,7 +1210,6 @@ export type PracticeSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   userId?: boolean
   folderId?: boolean
-  folderVersion?: boolean
   mode?: boolean
   status?: boolean
   currentIndex?: boolean
@@ -1221,10 +1220,11 @@ export type PracticeSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   endTime?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  folderVersion?: boolean
   folder?: boolean | Prisma.FolderDefaultArgs<ExtArgs>
-  questions?: boolean | Prisma.PracticeSession$questionsArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.PracticeSession$answersArgs<ExtArgs>
+  questions?: boolean | Prisma.PracticeSession$questionsArgs<ExtArgs>
   _count?: boolean | Prisma.PracticeSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSession"]>
 
@@ -1232,7 +1232,6 @@ export type PracticeSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   userId?: boolean
   folderId?: boolean
-  folderVersion?: boolean
   mode?: boolean
   status?: boolean
   currentIndex?: boolean
@@ -1243,15 +1242,15 @@ export type PracticeSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   endTime?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  folderVersion?: boolean
   folder?: boolean | Prisma.FolderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSession"]>
 
 export type PracticeSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
   folderId?: boolean
-  folderVersion?: boolean
   mode?: boolean
   status?: boolean
   currentIndex?: boolean
@@ -1262,15 +1261,15 @@ export type PracticeSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   endTime?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  folderVersion?: boolean
   folder?: boolean | Prisma.FolderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSession"]>
 
 export type PracticeSessionSelectScalar = {
   id?: boolean
   userId?: boolean
   folderId?: boolean
-  folderVersion?: boolean
   mode?: boolean
   status?: boolean
   currentIndex?: boolean
@@ -1281,38 +1280,38 @@ export type PracticeSessionSelectScalar = {
   endTime?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  folderVersion?: boolean
 }
 
-export type PracticeSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "folderId" | "folderVersion" | "mode" | "status" | "currentIndex" | "correctCount" | "incorrectCount" | "summary" | "startTime" | "endTime" | "createdAt" | "updatedAt", ExtArgs["result"]["practiceSession"]>
+export type PracticeSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "folderId" | "mode" | "status" | "currentIndex" | "correctCount" | "incorrectCount" | "summary" | "startTime" | "endTime" | "createdAt" | "updatedAt" | "folderVersion", ExtArgs["result"]["practiceSession"]>
 export type PracticeSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   folder?: boolean | Prisma.FolderDefaultArgs<ExtArgs>
-  questions?: boolean | Prisma.PracticeSession$questionsArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.PracticeSession$answersArgs<ExtArgs>
+  questions?: boolean | Prisma.PracticeSession$questionsArgs<ExtArgs>
   _count?: boolean | Prisma.PracticeSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PracticeSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   folder?: boolean | Prisma.FolderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type PracticeSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   folder?: boolean | Prisma.FolderDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $PracticeSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PracticeSession"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     folder: Prisma.$FolderPayload<ExtArgs>
-    questions: Prisma.$PracticeSessionQuestionPayload<ExtArgs>[]
+    user: Prisma.$UserPayload<ExtArgs>
     answers: Prisma.$PracticeSessionAnswerPayload<ExtArgs>[]
+    questions: Prisma.$PracticeSessionQuestionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     folderId: string
-    folderVersion: number
     mode: string
     status: string
     currentIndex: number
@@ -1323,6 +1322,7 @@ export type $PracticeSessionPayload<ExtArgs extends runtime.Types.Extensions.Int
     endTime: Date | null
     createdAt: Date
     updatedAt: Date
+    folderVersion: number
   }, ExtArgs["result"]["practiceSession"]>
   composites: {}
 }
@@ -1717,10 +1717,10 @@ readonly fields: PracticeSessionFieldRefs;
  */
 export interface Prisma__PracticeSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   folder<T extends Prisma.FolderDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FolderDefaultArgs<ExtArgs>>): Prisma.Prisma__FolderClient<runtime.Types.Result.GetResult<Prisma.$FolderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  questions<T extends Prisma.PracticeSession$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSession$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PracticeSessionQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   answers<T extends Prisma.PracticeSession$answersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSession$answersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PracticeSessionAnswerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  questions<T extends Prisma.PracticeSession$questionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSession$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PracticeSessionQuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1753,7 +1753,6 @@ export interface PracticeSessionFieldRefs {
   readonly id: Prisma.FieldRef<"PracticeSession", 'String'>
   readonly userId: Prisma.FieldRef<"PracticeSession", 'String'>
   readonly folderId: Prisma.FieldRef<"PracticeSession", 'String'>
-  readonly folderVersion: Prisma.FieldRef<"PracticeSession", 'Int'>
   readonly mode: Prisma.FieldRef<"PracticeSession", 'String'>
   readonly status: Prisma.FieldRef<"PracticeSession", 'String'>
   readonly currentIndex: Prisma.FieldRef<"PracticeSession", 'Int'>
@@ -1764,6 +1763,7 @@ export interface PracticeSessionFieldRefs {
   readonly endTime: Prisma.FieldRef<"PracticeSession", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"PracticeSession", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PracticeSession", 'DateTime'>
+  readonly folderVersion: Prisma.FieldRef<"PracticeSession", 'Int'>
 }
     
 
@@ -2160,30 +2160,6 @@ export type PracticeSessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * PracticeSession.questions
- */
-export type PracticeSession$questionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PracticeSessionQuestion
-   */
-  select?: Prisma.PracticeSessionQuestionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PracticeSessionQuestion
-   */
-  omit?: Prisma.PracticeSessionQuestionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PracticeSessionQuestionInclude<ExtArgs> | null
-  where?: Prisma.PracticeSessionQuestionWhereInput
-  orderBy?: Prisma.PracticeSessionQuestionOrderByWithRelationInput | Prisma.PracticeSessionQuestionOrderByWithRelationInput[]
-  cursor?: Prisma.PracticeSessionQuestionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PracticeSessionQuestionScalarFieldEnum | Prisma.PracticeSessionQuestionScalarFieldEnum[]
-}
-
-/**
  * PracticeSession.answers
  */
 export type PracticeSession$answersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2205,6 +2181,30 @@ export type PracticeSession$answersArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PracticeSessionAnswerScalarFieldEnum | Prisma.PracticeSessionAnswerScalarFieldEnum[]
+}
+
+/**
+ * PracticeSession.questions
+ */
+export type PracticeSession$questionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PracticeSessionQuestion
+   */
+  select?: Prisma.PracticeSessionQuestionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PracticeSessionQuestion
+   */
+  omit?: Prisma.PracticeSessionQuestionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PracticeSessionQuestionInclude<ExtArgs> | null
+  where?: Prisma.PracticeSessionQuestionWhereInput
+  orderBy?: Prisma.PracticeSessionQuestionOrderByWithRelationInput | Prisma.PracticeSessionQuestionOrderByWithRelationInput[]
+  cursor?: Prisma.PracticeSessionQuestionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PracticeSessionQuestionScalarFieldEnum | Prisma.PracticeSessionQuestionScalarFieldEnum[]
 }
 
 /**

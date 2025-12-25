@@ -17,6 +17,8 @@ import { Loader2, User, Save } from 'lucide-react';
 import api from '@/lib/axios';
 import { toast } from 'sonner';
 
+import useAuthStore from '@/store/auth.store';
+
 interface UserProfile {
     id: string;
     email: string;
@@ -24,8 +26,11 @@ interface UserProfile {
     phone?: string;
     gender?: string;
     address?: string;
+    isVerified: boolean;
     createdAt: string;
 }
+
+import { motion } from 'framer-motion';
 
 export default function ProfilePage() {
     const router = useRouter();
@@ -38,6 +43,8 @@ export default function ProfilePage() {
         gender: '',
         address: '',
     });
+    const { sendVerificationEmail, user } = useAuthStore();
+    const [verificationSent, setVerificationSent] = useState(false);
 
     useEffect(() => {
         fetchProfileData();
@@ -77,6 +84,21 @@ export default function ProfilePage() {
         }
     };
 
+    const [isResending, setIsResending] = useState(false);
+
+    const handleVerify = async () => {
+        if (verificationSent || isResending) return;
+        setIsResending(true);
+        try {
+            await sendVerificationEmail();
+            setVerificationSent(true);
+        } catch (error) {
+            // Error handled in store
+        } finally {
+            setIsResending(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
@@ -86,11 +108,48 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="container max-w-4xl mx-auto p-6 space-y-6">
+        <div className="container max-w-4xl mx-auto space-y-6">
             <div className="flex items-center gap-3">
                 <User className="h-8 w-8" />
                 <h1 className="text-3xl font-bold">Hồ sơ cá nhân</h1>
             </div>
+
+            {/* Verification Alert */}
+            {user && !user.isVerified && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                >
+                    <div className="rounded-xl border bg-card text-card-foreground shadow">
+                        <div className="flex flex-col md:flex-row items-center justify-between p-4 gap-3">
+                            <div className="flex items-center gap-3 w-full">
+                                <div>
+                                    <h3 className="font-semibold">Tài khoản chưa được xác thực</h3>
+                                    <p className="text-sm text-muted-foreground">Vui lòng kiểm tra email để xác thực tài khoản của bạn.</p>
+                                </div>
+                            </div>
+                            <Button
+                                className="w-full md:w-fit"
+                                variant="outline"
+                                size="sm"
+                                onClick={handleVerify}
+                                disabled={verificationSent || isResending}
+                            >
+                                {isResending ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Đang gửi...
+                                    </>
+                                ) : verificationSent ? (
+                                    "Đã gửi lại"
+                                ) : (
+                                    "Gửi lại email kích hoạt"
+                                )}
+                            </Button>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
 
             {/* Profile Information */}
             <Card>
@@ -99,7 +158,9 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="email">Email</Label>
+                        </div>
                         <Input
                             id="email"
                             type="email"

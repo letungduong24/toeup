@@ -36,13 +36,6 @@ export default function PracticePage() {
       icon: <FileText className="h-8 w-8 text-primary" />,
       available: true,
     },
-    {
-      mode: 'write-paragraph' as PracticeMode,
-      label: 'Viết đoạn văn ngắn',
-      description: 'Viết đoạn văn ngắn từ các từ trong Flashbook',
-      icon: <BookOpen className="h-8 w-8 text-primary" />,
-      available: false,
-    },
   ];
 
   const handleSelectMode = (mode: PracticeMode) => {
@@ -84,6 +77,7 @@ export default function PracticePage() {
             whileHover={item.available ? { scale: 1.02, y: -4 } : {}}
             whileTap={item.available ? { scale: 0.98 } : {}}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className={item.mode === 'write-sentence' ? 'md:col-span-2' : ''}
           >
             <Button
               variant="outline"
@@ -104,7 +98,7 @@ export default function PracticePage() {
                       </span>
                     )}
                   </div>
-                  <div className="text-sm text-muted-foreground font-normal">
+                  <div className="text-sm text-muted-foreground font-normal text-wrap">
                     {item.description}
                   </div>
                 </div>

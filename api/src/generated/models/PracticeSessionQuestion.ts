@@ -228,9 +228,9 @@ export type PracticeSessionQuestionWhereInput = {
   answer?: Prisma.StringFilter<"PracticeSessionQuestion"> | string
   options?: Prisma.JsonNullableFilter<"PracticeSessionQuestion">
   order?: Prisma.IntFilter<"PracticeSessionQuestion"> | number
-  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
-  flashcard?: Prisma.XOR<Prisma.FlashcardScalarRelationFilter, Prisma.FlashcardWhereInput>
   answers?: Prisma.PracticeSessionAnswerListRelationFilter
+  flashcard?: Prisma.XOR<Prisma.FlashcardScalarRelationFilter, Prisma.FlashcardWhereInput>
+  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
 }
 
 export type PracticeSessionQuestionOrderByWithRelationInput = {
@@ -241,9 +241,9 @@ export type PracticeSessionQuestionOrderByWithRelationInput = {
   answer?: Prisma.SortOrder
   options?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
-  session?: Prisma.PracticeSessionOrderByWithRelationInput
-  flashcard?: Prisma.FlashcardOrderByWithRelationInput
   answers?: Prisma.PracticeSessionAnswerOrderByRelationAggregateInput
+  flashcard?: Prisma.FlashcardOrderByWithRelationInput
+  session?: Prisma.PracticeSessionOrderByWithRelationInput
 }
 
 export type PracticeSessionQuestionWhereUniqueInput = Prisma.AtLeast<{
@@ -257,9 +257,9 @@ export type PracticeSessionQuestionWhereUniqueInput = Prisma.AtLeast<{
   answer?: Prisma.StringFilter<"PracticeSessionQuestion"> | string
   options?: Prisma.JsonNullableFilter<"PracticeSessionQuestion">
   order?: Prisma.IntFilter<"PracticeSessionQuestion"> | number
-  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
-  flashcard?: Prisma.XOR<Prisma.FlashcardScalarRelationFilter, Prisma.FlashcardWhereInput>
   answers?: Prisma.PracticeSessionAnswerListRelationFilter
+  flashcard?: Prisma.XOR<Prisma.FlashcardScalarRelationFilter, Prisma.FlashcardWhereInput>
+  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
 }, "id">
 
 export type PracticeSessionQuestionOrderByWithAggregationInput = {
@@ -296,9 +296,9 @@ export type PracticeSessionQuestionCreateInput = {
   answer: string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
-  session: Prisma.PracticeSessionCreateNestedOneWithoutQuestionsInput
-  flashcard: Prisma.FlashcardCreateNestedOneWithoutPracticeSessionQuestionsInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutQuestionInput
+  flashcard: Prisma.FlashcardCreateNestedOneWithoutPracticeSessionQuestionsInput
+  session: Prisma.PracticeSessionCreateNestedOneWithoutQuestionsInput
 }
 
 export type PracticeSessionQuestionUncheckedCreateInput = {
@@ -318,9 +318,9 @@ export type PracticeSessionQuestionUpdateInput = {
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutQuestionsNestedInput
-  flashcard?: Prisma.FlashcardUpdateOneRequiredWithoutPracticeSessionQuestionsNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutQuestionNestedInput
+  flashcard?: Prisma.FlashcardUpdateOneRequiredWithoutPracticeSessionQuestionsNestedInput
+  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutQuestionsNestedInput
 }
 
 export type PracticeSessionQuestionUncheckedUpdateInput = {
@@ -517,8 +517,8 @@ export type PracticeSessionQuestionCreateWithoutFlashcardInput = {
   answer: string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
-  session: Prisma.PracticeSessionCreateNestedOneWithoutQuestionsInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutQuestionInput
+  session: Prisma.PracticeSessionCreateNestedOneWithoutQuestionsInput
 }
 
 export type PracticeSessionQuestionUncheckedCreateWithoutFlashcardInput = {
@@ -576,8 +576,8 @@ export type PracticeSessionQuestionCreateWithoutSessionInput = {
   answer: string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
-  flashcard: Prisma.FlashcardCreateNestedOneWithoutPracticeSessionQuestionsInput
   answers?: Prisma.PracticeSessionAnswerCreateNestedManyWithoutQuestionInput
+  flashcard: Prisma.FlashcardCreateNestedOneWithoutPracticeSessionQuestionsInput
 }
 
 export type PracticeSessionQuestionUncheckedCreateWithoutSessionInput = {
@@ -622,8 +622,8 @@ export type PracticeSessionQuestionCreateWithoutAnswersInput = {
   answer: string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
-  session: Prisma.PracticeSessionCreateNestedOneWithoutQuestionsInput
   flashcard: Prisma.FlashcardCreateNestedOneWithoutPracticeSessionQuestionsInput
+  session: Prisma.PracticeSessionCreateNestedOneWithoutQuestionsInput
 }
 
 export type PracticeSessionQuestionUncheckedCreateWithoutAnswersInput = {
@@ -658,8 +658,8 @@ export type PracticeSessionQuestionUpdateWithoutAnswersInput = {
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutQuestionsNestedInput
   flashcard?: Prisma.FlashcardUpdateOneRequiredWithoutPracticeSessionQuestionsNestedInput
+  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutQuestionsNestedInput
 }
 
 export type PracticeSessionQuestionUncheckedUpdateWithoutAnswersInput = {
@@ -687,8 +687,8 @@ export type PracticeSessionQuestionUpdateWithoutFlashcardInput = {
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutQuestionsNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutQuestionNestedInput
+  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutQuestionsNestedInput
 }
 
 export type PracticeSessionQuestionUncheckedUpdateWithoutFlashcardInput = {
@@ -725,8 +725,8 @@ export type PracticeSessionQuestionUpdateWithoutSessionInput = {
   answer?: Prisma.StringFieldUpdateOperationsInput | string
   options?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
-  flashcard?: Prisma.FlashcardUpdateOneRequiredWithoutPracticeSessionQuestionsNestedInput
   answers?: Prisma.PracticeSessionAnswerUpdateManyWithoutQuestionNestedInput
+  flashcard?: Prisma.FlashcardUpdateOneRequiredWithoutPracticeSessionQuestionsNestedInput
 }
 
 export type PracticeSessionQuestionUncheckedUpdateWithoutSessionInput = {
@@ -787,9 +787,9 @@ export type PracticeSessionQuestionSelect<ExtArgs extends runtime.Types.Extensio
   answer?: boolean
   options?: boolean
   order?: boolean
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
-  flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.PracticeSessionQuestion$answersArgs<ExtArgs>
+  flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PracticeSessionQuestionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSessionQuestion"]>
 
@@ -801,8 +801,8 @@ export type PracticeSessionQuestionSelectCreateManyAndReturn<ExtArgs extends run
   answer?: boolean
   options?: boolean
   order?: boolean
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSessionQuestion"]>
 
 export type PracticeSessionQuestionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -813,8 +813,8 @@ export type PracticeSessionQuestionSelectUpdateManyAndReturn<ExtArgs extends run
   answer?: boolean
   options?: boolean
   order?: boolean
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSessionQuestion"]>
 
 export type PracticeSessionQuestionSelectScalar = {
@@ -829,26 +829,26 @@ export type PracticeSessionQuestionSelectScalar = {
 
 export type PracticeSessionQuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "flashcardId" | "question" | "answer" | "options" | "order", ExtArgs["result"]["practiceSessionQuestion"]>
 export type PracticeSessionQuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
-  flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.PracticeSessionQuestion$answersArgs<ExtArgs>
+  flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PracticeSessionQuestionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PracticeSessionQuestionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }
 export type PracticeSessionQuestionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   flashcard?: boolean | Prisma.FlashcardDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }
 
 export type $PracticeSessionQuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PracticeSessionQuestion"
   objects: {
-    session: Prisma.$PracticeSessionPayload<ExtArgs>
-    flashcard: Prisma.$FlashcardPayload<ExtArgs>
     answers: Prisma.$PracticeSessionAnswerPayload<ExtArgs>[]
+    flashcard: Prisma.$FlashcardPayload<ExtArgs>
+    session: Prisma.$PracticeSessionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1252,9 +1252,9 @@ readonly fields: PracticeSessionQuestionFieldRefs;
  */
 export interface Prisma__PracticeSessionQuestionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  session<T extends Prisma.PracticeSessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSessionDefaultArgs<ExtArgs>>): Prisma.Prisma__PracticeSessionClient<runtime.Types.Result.GetResult<Prisma.$PracticeSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  flashcard<T extends Prisma.FlashcardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FlashcardDefaultArgs<ExtArgs>>): Prisma.Prisma__FlashcardClient<runtime.Types.Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   answers<T extends Prisma.PracticeSessionQuestion$answersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSessionQuestion$answersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PracticeSessionAnswerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  flashcard<T extends Prisma.FlashcardDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FlashcardDefaultArgs<ExtArgs>>): Prisma.Prisma__FlashcardClient<runtime.Types.Result.GetResult<Prisma.$FlashcardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  session<T extends Prisma.PracticeSessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSessionDefaultArgs<ExtArgs>>): Prisma.Prisma__PracticeSessionClient<runtime.Types.Result.GetResult<Prisma.$PracticeSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

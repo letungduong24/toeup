@@ -28,15 +28,15 @@ export type AggregateFlashcard = {
 
 export type FlashcardAvgAggregateOutputType = {
   review_count: number | null
-  interval: number | null
   easeFactor: number | null
+  interval: number | null
   lapseCount: number | null
 }
 
 export type FlashcardSumAggregateOutputType = {
   review_count: number | null
-  interval: number | null
   easeFactor: number | null
+  interval: number | null
   lapseCount: number | null
 }
 
@@ -47,13 +47,13 @@ export type FlashcardMinAggregateOutputType = {
   folder_id: string | null
   review_count: number | null
   audio_url: string | null
-  status: string | null
-  interval: number | null
-  nextReview: Date | null
-  easeFactor: number | null
-  lapseCount: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  easeFactor: number | null
+  interval: number | null
+  lapseCount: number | null
+  nextReview: Date | null
+  status: string | null
 }
 
 export type FlashcardMaxAggregateOutputType = {
@@ -63,13 +63,13 @@ export type FlashcardMaxAggregateOutputType = {
   folder_id: string | null
   review_count: number | null
   audio_url: string | null
-  status: string | null
-  interval: number | null
-  nextReview: Date | null
-  easeFactor: number | null
-  lapseCount: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  easeFactor: number | null
+  interval: number | null
+  lapseCount: number | null
+  nextReview: Date | null
+  status: string | null
 }
 
 export type FlashcardCountAggregateOutputType = {
@@ -80,29 +80,29 @@ export type FlashcardCountAggregateOutputType = {
   review_count: number
   audio_url: number
   usage: number
-  status: number
-  interval: number
-  nextReview: number
-  easeFactor: number
-  lapseCount: number
   tags: number
   createdAt: number
   updatedAt: number
+  easeFactor: number
+  interval: number
+  lapseCount: number
+  nextReview: number
+  status: number
   _all: number
 }
 
 
 export type FlashcardAvgAggregateInputType = {
   review_count?: true
-  interval?: true
   easeFactor?: true
+  interval?: true
   lapseCount?: true
 }
 
 export type FlashcardSumAggregateInputType = {
   review_count?: true
-  interval?: true
   easeFactor?: true
+  interval?: true
   lapseCount?: true
 }
 
@@ -113,13 +113,13 @@ export type FlashcardMinAggregateInputType = {
   folder_id?: true
   review_count?: true
   audio_url?: true
-  status?: true
-  interval?: true
-  nextReview?: true
-  easeFactor?: true
-  lapseCount?: true
   createdAt?: true
   updatedAt?: true
+  easeFactor?: true
+  interval?: true
+  lapseCount?: true
+  nextReview?: true
+  status?: true
 }
 
 export type FlashcardMaxAggregateInputType = {
@@ -129,13 +129,13 @@ export type FlashcardMaxAggregateInputType = {
   folder_id?: true
   review_count?: true
   audio_url?: true
-  status?: true
-  interval?: true
-  nextReview?: true
-  easeFactor?: true
-  lapseCount?: true
   createdAt?: true
   updatedAt?: true
+  easeFactor?: true
+  interval?: true
+  lapseCount?: true
+  nextReview?: true
+  status?: true
 }
 
 export type FlashcardCountAggregateInputType = {
@@ -146,14 +146,14 @@ export type FlashcardCountAggregateInputType = {
   review_count?: true
   audio_url?: true
   usage?: true
-  status?: true
-  interval?: true
-  nextReview?: true
-  easeFactor?: true
-  lapseCount?: true
   tags?: true
   createdAt?: true
   updatedAt?: true
+  easeFactor?: true
+  interval?: true
+  lapseCount?: true
+  nextReview?: true
+  status?: true
   _all?: true
 }
 
@@ -251,14 +251,14 @@ export type FlashcardGroupByOutputType = {
   review_count: number
   audio_url: string | null
   usage: runtime.JsonValue | null
-  status: string
-  interval: number
-  nextReview: Date | null
-  easeFactor: number
-  lapseCount: number
   tags: string[]
   createdAt: Date
   updatedAt: Date
+  easeFactor: number
+  interval: number
+  lapseCount: number
+  nextReview: Date | null
+  status: string
   _count: FlashcardCountAggregateOutputType | null
   _avg: FlashcardAvgAggregateOutputType | null
   _sum: FlashcardSumAggregateOutputType | null
@@ -292,14 +292,14 @@ export type FlashcardWhereInput = {
   review_count?: Prisma.IntFilter<"Flashcard"> | number
   audio_url?: Prisma.StringNullableFilter<"Flashcard"> | string | null
   usage?: Prisma.JsonNullableFilter<"Flashcard">
-  status?: Prisma.StringFilter<"Flashcard"> | string
-  interval?: Prisma.FloatFilter<"Flashcard"> | number
-  nextReview?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
-  easeFactor?: Prisma.FloatFilter<"Flashcard"> | number
-  lapseCount?: Prisma.IntFilter<"Flashcard"> | number
   tags?: Prisma.StringNullableListFilter<"Flashcard">
   createdAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
+  easeFactor?: Prisma.FloatFilter<"Flashcard"> | number
+  interval?: Prisma.FloatFilter<"Flashcard"> | number
+  lapseCount?: Prisma.IntFilter<"Flashcard"> | number
+  nextReview?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
+  status?: Prisma.StringFilter<"Flashcard"> | string
   folder?: Prisma.XOR<Prisma.FolderNullableScalarRelationFilter, Prisma.FolderWhereInput> | null
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionListRelationFilter
 }
@@ -312,14 +312,14 @@ export type FlashcardOrderByWithRelationInput = {
   review_count?: Prisma.SortOrder
   audio_url?: Prisma.SortOrderInput | Prisma.SortOrder
   usage?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  nextReview?: Prisma.SortOrderInput | Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  lapseCount?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
+  lapseCount?: Prisma.SortOrder
+  nextReview?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   folder?: Prisma.FolderOrderByWithRelationInput
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionOrderByRelationAggregateInput
 }
@@ -335,14 +335,14 @@ export type FlashcardWhereUniqueInput = Prisma.AtLeast<{
   review_count?: Prisma.IntFilter<"Flashcard"> | number
   audio_url?: Prisma.StringNullableFilter<"Flashcard"> | string | null
   usage?: Prisma.JsonNullableFilter<"Flashcard">
-  status?: Prisma.StringFilter<"Flashcard"> | string
-  interval?: Prisma.FloatFilter<"Flashcard"> | number
-  nextReview?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
-  easeFactor?: Prisma.FloatFilter<"Flashcard"> | number
-  lapseCount?: Prisma.IntFilter<"Flashcard"> | number
   tags?: Prisma.StringNullableListFilter<"Flashcard">
   createdAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
+  easeFactor?: Prisma.FloatFilter<"Flashcard"> | number
+  interval?: Prisma.FloatFilter<"Flashcard"> | number
+  lapseCount?: Prisma.IntFilter<"Flashcard"> | number
+  nextReview?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
+  status?: Prisma.StringFilter<"Flashcard"> | string
   folder?: Prisma.XOR<Prisma.FolderNullableScalarRelationFilter, Prisma.FolderWhereInput> | null
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionListRelationFilter
 }, "id">
@@ -355,14 +355,14 @@ export type FlashcardOrderByWithAggregationInput = {
   review_count?: Prisma.SortOrder
   audio_url?: Prisma.SortOrderInput | Prisma.SortOrder
   usage?: Prisma.SortOrderInput | Prisma.SortOrder
-  status?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  nextReview?: Prisma.SortOrderInput | Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  lapseCount?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
+  lapseCount?: Prisma.SortOrder
+  nextReview?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   _count?: Prisma.FlashcardCountOrderByAggregateInput
   _avg?: Prisma.FlashcardAvgOrderByAggregateInput
   _max?: Prisma.FlashcardMaxOrderByAggregateInput
@@ -381,14 +381,14 @@ export type FlashcardScalarWhereWithAggregatesInput = {
   review_count?: Prisma.IntWithAggregatesFilter<"Flashcard"> | number
   audio_url?: Prisma.StringNullableWithAggregatesFilter<"Flashcard"> | string | null
   usage?: Prisma.JsonNullableWithAggregatesFilter<"Flashcard">
-  status?: Prisma.StringWithAggregatesFilter<"Flashcard"> | string
-  interval?: Prisma.FloatWithAggregatesFilter<"Flashcard"> | number
-  nextReview?: Prisma.DateTimeNullableWithAggregatesFilter<"Flashcard"> | Date | string | null
-  easeFactor?: Prisma.FloatWithAggregatesFilter<"Flashcard"> | number
-  lapseCount?: Prisma.IntWithAggregatesFilter<"Flashcard"> | number
   tags?: Prisma.StringNullableListFilter<"Flashcard">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Flashcard"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Flashcard"> | Date | string
+  easeFactor?: Prisma.FloatWithAggregatesFilter<"Flashcard"> | number
+  interval?: Prisma.FloatWithAggregatesFilter<"Flashcard"> | number
+  lapseCount?: Prisma.IntWithAggregatesFilter<"Flashcard"> | number
+  nextReview?: Prisma.DateTimeNullableWithAggregatesFilter<"Flashcard"> | Date | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Flashcard"> | string
 }
 
 export type FlashcardCreateInput = {
@@ -398,14 +398,14 @@ export type FlashcardCreateInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
   folder?: Prisma.FolderCreateNestedOneWithoutFlashcardsInput
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutFlashcardInput
 }
@@ -418,14 +418,14 @@ export type FlashcardUncheckedCreateInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutFlashcardInput
 }
 
@@ -436,14 +436,14 @@ export type FlashcardUpdateInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   folder?: Prisma.FolderUpdateOneWithoutFlashcardsNestedInput
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionUpdateManyWithoutFlashcardNestedInput
 }
@@ -456,14 +456,14 @@ export type FlashcardUncheckedUpdateInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutFlashcardNestedInput
 }
 
@@ -475,14 +475,14 @@ export type FlashcardCreateManyInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
 }
 
 export type FlashcardUpdateManyMutationInput = {
@@ -492,14 +492,14 @@ export type FlashcardUpdateManyMutationInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FlashcardUncheckedUpdateManyInput = {
@@ -510,14 +510,14 @@ export type FlashcardUncheckedUpdateManyInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FlashcardListRelationFilter = {
@@ -546,20 +546,20 @@ export type FlashcardCountOrderByAggregateInput = {
   review_count?: Prisma.SortOrder
   audio_url?: Prisma.SortOrder
   usage?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  nextReview?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  lapseCount?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
+  lapseCount?: Prisma.SortOrder
+  nextReview?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type FlashcardAvgOrderByAggregateInput = {
   review_count?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
   lapseCount?: Prisma.SortOrder
 }
 
@@ -570,13 +570,13 @@ export type FlashcardMaxOrderByAggregateInput = {
   folder_id?: Prisma.SortOrder
   review_count?: Prisma.SortOrder
   audio_url?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  nextReview?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  lapseCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
+  lapseCount?: Prisma.SortOrder
+  nextReview?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type FlashcardMinOrderByAggregateInput = {
@@ -586,19 +586,19 @@ export type FlashcardMinOrderByAggregateInput = {
   folder_id?: Prisma.SortOrder
   review_count?: Prisma.SortOrder
   audio_url?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
-  nextReview?: Prisma.SortOrder
-  easeFactor?: Prisma.SortOrder
-  lapseCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
+  lapseCount?: Prisma.SortOrder
+  nextReview?: Prisma.SortOrder
+  status?: Prisma.SortOrder
 }
 
 export type FlashcardSumOrderByAggregateInput = {
   review_count?: Prisma.SortOrder
-  interval?: Prisma.SortOrder
   easeFactor?: Prisma.SortOrder
+  interval?: Prisma.SortOrder
   lapseCount?: Prisma.SortOrder
 }
 
@@ -653,21 +653,17 @@ export type FlashcardCreatetagsInput = {
   set: string[]
 }
 
+export type FlashcardUpdatetagsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type FlashcardUpdatetagsInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type FlashcardCreateNestedOneWithoutPracticeSessionQuestionsInput = {
@@ -691,14 +687,14 @@ export type FlashcardCreateWithoutFolderInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionCreateNestedManyWithoutFlashcardInput
 }
 
@@ -709,14 +705,14 @@ export type FlashcardUncheckedCreateWithoutFolderInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionUncheckedCreateNestedManyWithoutFlashcardInput
 }
 
@@ -757,14 +753,14 @@ export type FlashcardScalarWhereInput = {
   review_count?: Prisma.IntFilter<"Flashcard"> | number
   audio_url?: Prisma.StringNullableFilter<"Flashcard"> | string | null
   usage?: Prisma.JsonNullableFilter<"Flashcard">
-  status?: Prisma.StringFilter<"Flashcard"> | string
-  interval?: Prisma.FloatFilter<"Flashcard"> | number
-  nextReview?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
-  easeFactor?: Prisma.FloatFilter<"Flashcard"> | number
-  lapseCount?: Prisma.IntFilter<"Flashcard"> | number
   tags?: Prisma.StringNullableListFilter<"Flashcard">
   createdAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Flashcard"> | Date | string
+  easeFactor?: Prisma.FloatFilter<"Flashcard"> | number
+  interval?: Prisma.FloatFilter<"Flashcard"> | number
+  lapseCount?: Prisma.IntFilter<"Flashcard"> | number
+  nextReview?: Prisma.DateTimeNullableFilter<"Flashcard"> | Date | string | null
+  status?: Prisma.StringFilter<"Flashcard"> | string
 }
 
 export type FlashcardCreateWithoutPracticeSessionQuestionsInput = {
@@ -774,14 +770,14 @@ export type FlashcardCreateWithoutPracticeSessionQuestionsInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
   folder?: Prisma.FolderCreateNestedOneWithoutFlashcardsInput
 }
 
@@ -793,14 +789,14 @@ export type FlashcardUncheckedCreateWithoutPracticeSessionQuestionsInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
 }
 
 export type FlashcardCreateOrConnectWithoutPracticeSessionQuestionsInput = {
@@ -826,14 +822,14 @@ export type FlashcardUpdateWithoutPracticeSessionQuestionsInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   folder?: Prisma.FolderUpdateOneWithoutFlashcardsNestedInput
 }
 
@@ -845,14 +841,14 @@ export type FlashcardUncheckedUpdateWithoutPracticeSessionQuestionsInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type FlashcardCreateManyFolderInput = {
@@ -862,14 +858,14 @@ export type FlashcardCreateManyFolderInput = {
   review_count?: number
   audio_url?: string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: string
-  interval?: number
-  nextReview?: Date | string | null
-  easeFactor?: number
-  lapseCount?: number
   tags?: Prisma.FlashcardCreatetagsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
+  easeFactor?: number
+  interval?: number
+  lapseCount?: number
+  nextReview?: Date | string | null
+  status?: string
 }
 
 export type FlashcardUpdateWithoutFolderInput = {
@@ -879,14 +875,14 @@ export type FlashcardUpdateWithoutFolderInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionUpdateManyWithoutFlashcardNestedInput
 }
 
@@ -897,14 +893,14 @@ export type FlashcardUncheckedUpdateWithoutFolderInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
   practiceSessionQuestions?: Prisma.PracticeSessionQuestionUncheckedUpdateManyWithoutFlashcardNestedInput
 }
 
@@ -915,14 +911,14 @@ export type FlashcardUncheckedUpdateManyWithoutFolderInput = {
   review_count?: Prisma.IntFieldUpdateOperationsInput | number
   audio_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usage?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interval?: Prisma.FloatFieldUpdateOperationsInput | number
-  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
-  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
   tags?: Prisma.FlashcardUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  easeFactor?: Prisma.FloatFieldUpdateOperationsInput | number
+  interval?: Prisma.FloatFieldUpdateOperationsInput | number
+  lapseCount?: Prisma.IntFieldUpdateOperationsInput | number
+  nextReview?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -964,14 +960,14 @@ export type FlashcardSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   review_count?: boolean
   audio_url?: boolean
   usage?: boolean
-  status?: boolean
-  interval?: boolean
-  nextReview?: boolean
-  easeFactor?: boolean
-  lapseCount?: boolean
   tags?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  easeFactor?: boolean
+  interval?: boolean
+  lapseCount?: boolean
+  nextReview?: boolean
+  status?: boolean
   folder?: boolean | Prisma.Flashcard$folderArgs<ExtArgs>
   practiceSessionQuestions?: boolean | Prisma.Flashcard$practiceSessionQuestionsArgs<ExtArgs>
   _count?: boolean | Prisma.FlashcardCountOutputTypeDefaultArgs<ExtArgs>
@@ -985,14 +981,14 @@ export type FlashcardSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   review_count?: boolean
   audio_url?: boolean
   usage?: boolean
-  status?: boolean
-  interval?: boolean
-  nextReview?: boolean
-  easeFactor?: boolean
-  lapseCount?: boolean
   tags?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  easeFactor?: boolean
+  interval?: boolean
+  lapseCount?: boolean
+  nextReview?: boolean
+  status?: boolean
   folder?: boolean | Prisma.Flashcard$folderArgs<ExtArgs>
 }, ExtArgs["result"]["flashcard"]>
 
@@ -1004,14 +1000,14 @@ export type FlashcardSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   review_count?: boolean
   audio_url?: boolean
   usage?: boolean
-  status?: boolean
-  interval?: boolean
-  nextReview?: boolean
-  easeFactor?: boolean
-  lapseCount?: boolean
   tags?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  easeFactor?: boolean
+  interval?: boolean
+  lapseCount?: boolean
+  nextReview?: boolean
+  status?: boolean
   folder?: boolean | Prisma.Flashcard$folderArgs<ExtArgs>
 }, ExtArgs["result"]["flashcard"]>
 
@@ -1023,17 +1019,17 @@ export type FlashcardSelectScalar = {
   review_count?: boolean
   audio_url?: boolean
   usage?: boolean
-  status?: boolean
-  interval?: boolean
-  nextReview?: boolean
-  easeFactor?: boolean
-  lapseCount?: boolean
   tags?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  easeFactor?: boolean
+  interval?: boolean
+  lapseCount?: boolean
+  nextReview?: boolean
+  status?: boolean
 }
 
-export type FlashcardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "meaning" | "folder_id" | "review_count" | "audio_url" | "usage" | "status" | "interval" | "nextReview" | "easeFactor" | "lapseCount" | "tags" | "createdAt" | "updatedAt", ExtArgs["result"]["flashcard"]>
+export type FlashcardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "meaning" | "folder_id" | "review_count" | "audio_url" | "usage" | "tags" | "createdAt" | "updatedAt" | "easeFactor" | "interval" | "lapseCount" | "nextReview" | "status", ExtArgs["result"]["flashcard"]>
 export type FlashcardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   folder?: boolean | Prisma.Flashcard$folderArgs<ExtArgs>
   practiceSessionQuestions?: boolean | Prisma.Flashcard$practiceSessionQuestionsArgs<ExtArgs>
@@ -1060,14 +1056,14 @@ export type $FlashcardPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     review_count: number
     audio_url: string | null
     usage: runtime.JsonValue | null
-    status: string
-    interval: number
-    nextReview: Date | null
-    easeFactor: number
-    lapseCount: number
     tags: string[]
     createdAt: Date
     updatedAt: Date
+    easeFactor: number
+    interval: number
+    lapseCount: number
+    nextReview: Date | null
+    status: string
   }, ExtArgs["result"]["flashcard"]>
   composites: {}
 }
@@ -1500,14 +1496,14 @@ export interface FlashcardFieldRefs {
   readonly review_count: Prisma.FieldRef<"Flashcard", 'Int'>
   readonly audio_url: Prisma.FieldRef<"Flashcard", 'String'>
   readonly usage: Prisma.FieldRef<"Flashcard", 'Json'>
-  readonly status: Prisma.FieldRef<"Flashcard", 'String'>
-  readonly interval: Prisma.FieldRef<"Flashcard", 'Float'>
-  readonly nextReview: Prisma.FieldRef<"Flashcard", 'DateTime'>
-  readonly easeFactor: Prisma.FieldRef<"Flashcard", 'Float'>
-  readonly lapseCount: Prisma.FieldRef<"Flashcard", 'Int'>
   readonly tags: Prisma.FieldRef<"Flashcard", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Flashcard", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Flashcard", 'DateTime'>
+  readonly easeFactor: Prisma.FieldRef<"Flashcard", 'Float'>
+  readonly interval: Prisma.FieldRef<"Flashcard", 'Float'>
+  readonly lapseCount: Prisma.FieldRef<"Flashcard", 'Int'>
+  readonly nextReview: Prisma.FieldRef<"Flashcard", 'DateTime'>
+  readonly status: Prisma.FieldRef<"Flashcard", 'String'>
 }
     
 

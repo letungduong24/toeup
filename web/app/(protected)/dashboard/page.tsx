@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 import useAuthStore from '@/store/auth.store';
 import useFolderStore from '@/store/folder.store';
 import useSummaryStore from '@/store/summary.store';
@@ -12,7 +13,7 @@ import CreateFolderModal from '@/components/flashcard/create-folder-modal';
 import AIAssistantModal from '@/components/flashcard/ai-assistant-modal';
 import AttendanceCalendar from '@/components/attendance/attendance-calendar';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Calendar,
   Play,
   Pause,
@@ -20,19 +21,21 @@ import {
   Loader2,
   PartyPopper
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { BsFolder } from "react-icons/bs";
 import { PiStarFour } from "react-icons/pi";
 import { FaPlus } from "react-icons/fa";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
+
+
 export default function DashboardPage() {
-  const { user } = useAuthStore();
+  const { user, sendVerificationEmail } = useAuthStore();
   const { folders, fetchFolders, loading } = useFolderStore();
-  const { 
-    summaryStats, 
-    loading: loadingSummary, 
+  const {
+    summaryStats,
+    loading: loadingSummary,
     fetchSummaryStats,
     nearestReviewFolder,
     folderMode,
@@ -43,9 +46,26 @@ export default function DashboardPage() {
     fetchDailyStats,
   } = useSummaryStore();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [timeTracker, setTimeTracker] = useState({ isRunning: false, time: 0 });
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+
+  const [isResending, setIsResending] = useState(false);
+
+  const handleResendVerification = async () => {
+    if (verificationSent || isResending) return;
+    setIsResending(true);
+    try {
+      await sendVerificationEmail();
+      setVerificationSent(true);
+    } catch (error) {
+      // Error is handled in store
+    } finally {
+      setIsResending(false);
+    }
+  };
 
   useEffect(() => {
     fetchFolders(true);
@@ -54,6 +74,26 @@ export default function DashboardPage() {
     fetchNearestReviewFolder();
   }, []);
 
+
+  useEffect(() => {
+    if (searchParams.get('login') === 'google') {
+      toast.success('Đăng nhập thành công!');
+      // Remove the query param
+      router.replace('/dashboard');
+    }
+
+    if (searchParams.get('verified') === 'true') {
+      toast.success('Xác thực email thành công!');
+      // Update logic to set user as verified in store if needed, or just rely on fetchProfile/checkAuth next time
+      // For immediate UI update, we might want to reload or update store manually
+      // window.location.reload(); // Simple way to refresh auth state
+      router.replace('/dashboard');
+    } else if (searchParams.get('verified') === 'false') {
+      const error = searchParams.get('error');
+      toast.error(error ? `Xác thực thất bại: ${error}` : 'Xác thực email thất bại');
+      router.replace('/dashboard');
+    }
+  }, [searchParams, router]);
 
   // Time tracker logic
   useEffect(() => {
@@ -116,6 +156,44 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Verification Alert */}
+      {/* Verification Card */}
+      {user && !user.isVerified && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="rounded-xl border bg-card text-card-foreground shadow">
+            <div className="flex flex-col md:flex-row items-center justify-between p-4 gap-3">
+              <div className="flex items-center gap-3 w-full">
+                <div>
+                  <h3 className="font-semibold">Tài khoản chưa được xác thực</h3>
+                  <p className="text-sm text-muted-foreground">Vui lòng kiểm tra email để xác thực tài khoản của bạn.</p>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full md:w-fit"
+                onClick={handleResendVerification}
+                disabled={verificationSent || isResending}
+              >
+                {isResending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Đang gửi...
+                  </>
+                ) : verificationSent ? (
+                  "Đã gửi lại"
+                ) : (
+                  "Gửi lại email kích hoạt"
+                )}
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
       {/* Welcome Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -210,20 +288,20 @@ export default function DashboardPage() {
                     </EmptyHeader>
                     <EmptyContent>
                       <div className="flex flex-col sm:flex-row gap-3 w-full">
-                        <Button 
+                        <Button
                           onClick={() => setIsCreateModalOpen(true)}
                           className="flex-1"
                         >
                           <FaPlus className="mr-2 h-4 w-4" />
                           Tạo thủ công
                         </Button>
-                        <Button 
+                        <Button
                           onClick={() => setIsAIModalOpen(true)}
                           variant="outline"
                           className="flex-1"
                         >
                           <PiStarFour className="mr-2 h-4 w-4" />
-                          Trợ lý AI
+                          Tạo với AI
                         </Button>
                       </div>
                     </EmptyContent>

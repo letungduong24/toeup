@@ -36,7 +36,7 @@ export function LoginForm({
   const onSubmit = async (data: SignInRequest) => {
     try {
       await signin(data);
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       // Error đã được xử lý trong store
     }
@@ -67,7 +67,7 @@ export function LoginForm({
           <div className="flex items-center">
             <FieldLabel htmlFor="password">Mật khẩu</FieldLabel>
             <a
-              href="#"
+              href="/forgot-password"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Quên mật khẩu?

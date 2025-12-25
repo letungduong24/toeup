@@ -9,6 +9,7 @@ import { FaVolumeLow } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { RotateCcw } from "lucide-react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -50,6 +51,7 @@ const FlashcardModal: React.FC<FlashcardModalProps> = ({
       );
     } catch (error) {
       console.error('Error playing audio:', error);
+      toast.error("Trình duyệt của bạn không hỗ trợ âm thanh này");
     } finally {
       setIsPlayingWord(false);
     }

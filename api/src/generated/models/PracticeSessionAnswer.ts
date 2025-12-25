@@ -194,8 +194,8 @@ export type PracticeSessionAnswerWhereInput = {
   isCorrect?: Prisma.BoolFilter<"PracticeSessionAnswer"> | boolean
   evaluation?: Prisma.JsonNullableFilter<"PracticeSessionAnswer">
   answeredAt?: Prisma.DateTimeFilter<"PracticeSessionAnswer"> | Date | string
-  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
   question?: Prisma.XOR<Prisma.PracticeSessionQuestionScalarRelationFilter, Prisma.PracticeSessionQuestionWhereInput>
+  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
 }
 
 export type PracticeSessionAnswerOrderByWithRelationInput = {
@@ -206,8 +206,8 @@ export type PracticeSessionAnswerOrderByWithRelationInput = {
   isCorrect?: Prisma.SortOrder
   evaluation?: Prisma.SortOrderInput | Prisma.SortOrder
   answeredAt?: Prisma.SortOrder
-  session?: Prisma.PracticeSessionOrderByWithRelationInput
   question?: Prisma.PracticeSessionQuestionOrderByWithRelationInput
+  session?: Prisma.PracticeSessionOrderByWithRelationInput
 }
 
 export type PracticeSessionAnswerWhereUniqueInput = Prisma.AtLeast<{
@@ -221,8 +221,8 @@ export type PracticeSessionAnswerWhereUniqueInput = Prisma.AtLeast<{
   isCorrect?: Prisma.BoolFilter<"PracticeSessionAnswer"> | boolean
   evaluation?: Prisma.JsonNullableFilter<"PracticeSessionAnswer">
   answeredAt?: Prisma.DateTimeFilter<"PracticeSessionAnswer"> | Date | string
-  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
   question?: Prisma.XOR<Prisma.PracticeSessionQuestionScalarRelationFilter, Prisma.PracticeSessionQuestionWhereInput>
+  session?: Prisma.XOR<Prisma.PracticeSessionScalarRelationFilter, Prisma.PracticeSessionWhereInput>
 }, "id">
 
 export type PracticeSessionAnswerOrderByWithAggregationInput = {
@@ -257,8 +257,8 @@ export type PracticeSessionAnswerCreateInput = {
   isCorrect: boolean
   evaluation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answeredAt?: Date | string
-  session: Prisma.PracticeSessionCreateNestedOneWithoutAnswersInput
   question: Prisma.PracticeSessionQuestionCreateNestedOneWithoutAnswersInput
+  session: Prisma.PracticeSessionCreateNestedOneWithoutAnswersInput
 }
 
 export type PracticeSessionAnswerUncheckedCreateInput = {
@@ -277,8 +277,8 @@ export type PracticeSessionAnswerUpdateInput = {
   isCorrect?: Prisma.BoolFieldUpdateOperationsInput | boolean
   evaluation?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   answeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutAnswersNestedInput
   question?: Prisma.PracticeSessionQuestionUpdateOneRequiredWithoutAnswersNestedInput
+  session?: Prisma.PracticeSessionUpdateOneRequiredWithoutAnswersNestedInput
 }
 
 export type PracticeSessionAnswerUncheckedUpdateInput = {
@@ -624,8 +624,8 @@ export type PracticeSessionAnswerSelect<ExtArgs extends runtime.Types.Extensions
   isCorrect?: boolean
   evaluation?: boolean
   answeredAt?: boolean
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSessionAnswer"]>
 
 export type PracticeSessionAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -636,8 +636,8 @@ export type PracticeSessionAnswerSelectCreateManyAndReturn<ExtArgs extends runti
   isCorrect?: boolean
   evaluation?: boolean
   answeredAt?: boolean
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSessionAnswer"]>
 
 export type PracticeSessionAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -648,8 +648,8 @@ export type PracticeSessionAnswerSelectUpdateManyAndReturn<ExtArgs extends runti
   isCorrect?: boolean
   evaluation?: boolean
   answeredAt?: boolean
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["practiceSessionAnswer"]>
 
 export type PracticeSessionAnswerSelectScalar = {
@@ -664,23 +664,23 @@ export type PracticeSessionAnswerSelectScalar = {
 
 export type PracticeSessionAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "questionId" | "userAnswer" | "isCorrect" | "evaluation" | "answeredAt", ExtArgs["result"]["practiceSessionAnswer"]>
 export type PracticeSessionAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }
 export type PracticeSessionAnswerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }
 export type PracticeSessionAnswerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>
+  session?: boolean | Prisma.PracticeSessionDefaultArgs<ExtArgs>
 }
 
 export type $PracticeSessionAnswerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PracticeSessionAnswer"
   objects: {
-    session: Prisma.$PracticeSessionPayload<ExtArgs>
     question: Prisma.$PracticeSessionQuestionPayload<ExtArgs>
+    session: Prisma.$PracticeSessionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1084,8 +1084,8 @@ readonly fields: PracticeSessionAnswerFieldRefs;
  */
 export interface Prisma__PracticeSessionAnswerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  session<T extends Prisma.PracticeSessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSessionDefaultArgs<ExtArgs>>): Prisma.Prisma__PracticeSessionClient<runtime.Types.Result.GetResult<Prisma.$PracticeSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   question<T extends Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSessionQuestionDefaultArgs<ExtArgs>>): Prisma.Prisma__PracticeSessionQuestionClient<runtime.Types.Result.GetResult<Prisma.$PracticeSessionQuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  session<T extends Prisma.PracticeSessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PracticeSessionDefaultArgs<ExtArgs>>): Prisma.Prisma__PracticeSessionClient<runtime.Types.Result.GetResult<Prisma.$PracticeSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

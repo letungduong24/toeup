@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { toast } from 'sonner';
 import api from '@/lib/axios';
-import { 
-  UserResponse, 
-  SignInRequest, 
-  SignUpRequest,
-  signInRequestSchema,
-  signUpRequestSchema,
-  userResponseSchema 
+import {
+    UserResponse,
+    SignInRequest,
+    SignUpRequest,
+    signInRequestSchema,
+    signUpRequestSchema,
+    userResponseSchema
 } from '@/types/auth';
 
 interface AuthState {
@@ -20,6 +20,7 @@ interface AuthState {
     signout: () => Promise<void>
     signin: (credentials: SignInRequest) => Promise<void>
     signup: (credentials: SignUpRequest) => Promise<void>
+    sendVerificationEmail: () => Promise<void>
 }
 
 const useAuthStore = create<AuthState>((set) => ({
@@ -35,7 +36,7 @@ const useAuthStore = create<AuthState>((set) => ({
             const user = userResponseSchema.parse(response.data);
             set({ user });
         } catch (error: any) {
-            if(error.response?.data?.user){
+            if (error.response?.data?.user) {
                 try {
                     const user = userResponseSchema.parse(error.response.data.user);
                     set({ user });
@@ -52,7 +53,7 @@ const useAuthStore = create<AuthState>((set) => ({
 
     // Sign in
     signin: async (credentials: SignInRequest) => {
-        set({signInLoading: true})
+        set({ signInLoading: true })
         try {
             const validatedCredentials = signInRequestSchema.parse(credentials);
             const response = await api.post('/auth/login', validatedCredentials)
@@ -70,14 +71,14 @@ const useAuthStore = create<AuthState>((set) => ({
                 toast.error('Đăng nhập thất bại')
                 console.error(error);
             }
-        } finally{
-            set({signInLoading: false})
+        } finally {
+            set({ signInLoading: false })
         }
     },
 
     // Sign up
     signup: async (credentials: SignUpRequest) => {
-        set({signUpLoading: true})
+        set({ signUpLoading: true })
         try {
             const validatedCredentials = signUpRequestSchema.parse(credentials);
             const response = await api.post('/auth/signup', validatedCredentials)
@@ -93,8 +94,9 @@ const useAuthStore = create<AuthState>((set) => ({
             } else {
                 toast.error('Đăng ký thất bại')
             }
-        } finally{
-            set({signUpLoading: false})
+            throw error;
+        } finally {
+            set({ signUpLoading: false })
         }
     },
 
@@ -103,7 +105,7 @@ const useAuthStore = create<AuthState>((set) => ({
         set({ signOutLoading: true })
         try {
             await api.post('/auth/logout');
-            set({ user: null});
+            set({ user: null });
             toast.success('Đăng xuất thành công!')
         } catch (error: any) {
             toast.error(error.response.data.message)
@@ -111,6 +113,19 @@ const useAuthStore = create<AuthState>((set) => ({
             set({ signOutLoading: false })
         }
     },
+
+    sendVerificationEmail: async () => {
+        try {
+            await api.post('/auth/email/send-verification');
+            toast.success('Email xác thực đã được gửi!');
+        } catch (error: any) {
+            if (error.response?.data?.message) {
+                toast.error(error.response.data.message)
+            } else {
+                toast.error('Gửi email thất bại')
+            }
+        }
+    }
 }));
 
 export default useAuthStore; 

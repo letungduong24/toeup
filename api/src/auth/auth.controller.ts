@@ -7,7 +7,8 @@ import {
   HttpCode,
   HttpStatus,
   Request,
-  UseGuards
+  UseGuards,
+  Query
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { AuthService } from './auth.service';
@@ -94,7 +95,42 @@ export class AuthController {
       path: '/',
     });
 
-    return res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+    return res.redirect(`${process.env.FRONTEND_URL}/dashboard?login=google`);
+  }
+
+
+  @Post('email/send-verification')
+  @UseGuards(JwtAuthGuard)
+  async sendVerification(@Request() req) {
+    await this.authService.sendVerificationEmail(req.user.id);
+    return { message: 'Email sent' };
+  }
+
+  @Get('email/verify')
+  async verifyEmail(@Query('token') token: string, @Res() res: Response) {
+    try {
+      await this.authService.verifyEmail(token);
+      return res.redirect(`${process.env.FRONTEND_URL}/dashboard?verified=true`);
+    } catch (error) {
+      return res.redirect(`${process.env.FRONTEND_URL}/dashboard?verified=false&error=${error.message}`);
+    }
+  }
+
+  @Post('forgot-password')
+  async forgotPassword(@Body('email') email: string) {
+    await this.authService.forgotPassword(email);
+    // Always return success to prevent email enumeration
+    return { message: 'Nếu email tồn tại, link đặt lại mật khẩu sẽ được gửi.' };
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() body: any) {
+    const { token, newPassword } = body;
+    if (!token || !newPassword) {
+      throw new Error('Thiếu thông tin');
+    }
+    await this.authService.resetPassword(token, newPassword);
+    return { message: 'Đổi mật khẩu thành công' };
   }
 
 }

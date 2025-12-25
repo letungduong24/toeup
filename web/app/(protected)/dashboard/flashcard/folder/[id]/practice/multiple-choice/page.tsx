@@ -8,6 +8,7 @@ import { Loader2, CheckCircle2, XCircle, Volume2, ArrowRight, ArrowLeft } from '
 import { playAudioWithFallback } from '@/lib/audio-utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import useMultipleChoiceStore from '@/store/multiple-choice.store';
+import { toast } from "sonner";
 
 export default function MultipleChoicePracticePage() {
   const params = useParams();
@@ -177,6 +178,7 @@ export default function MultipleChoicePracticePage() {
       );
     } catch (error) {
       console.error('Error playing audio:', error);
+      toast.error("Trình duyệt của bạn không hỗ trợ âm thanh này");
     } finally {
       setLocalIsPlayingAudio(false);
     }
@@ -319,85 +321,103 @@ export default function MultipleChoicePracticePage() {
             <p className="text-lg font-semibold">{currentQuestion.question}</p>
           </div>
 
+          {/* Result Header (Message + Word + Audio) - Only when answered */}
+          {isAnswered && (
+            <div className="space-y-4 mb-6 text-center">
+              {/* Result Message */}
+              <h3 className={`text-xl font-bold ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                {isCorrect ? 'Bạn đã chọn đúng rồi!' : 'Bạn chọn chưa đúng rồi!'}
+              </h3>
+
+              {/* English Word */}
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">Từ tiếng Anh:</p>
+                <p className="text-3xl font-bold">{currentQuestion.flashcard.name}</p>
+              </div>
+
+              {/* Audio Button */}
+              <Button
+                variant="outline"
+                onClick={handlePlayAudio}
+                disabled={localIsPlayingAudio}
+                className="w-full md:w-auto"
+              >
+                {localIsPlayingAudio ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Đang phát...
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="mr-2 h-4 w-4" />
+                    Phát âm thanh
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
+
           {/* Options */}
-          {!isAnswered ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {options.map((option, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {options.map((option, index) => {
+              const isSelected = selectedOption === option;
+              const isCorrectAnswer = option === currentQuestion.flashcard.name;
+
+              let variant = 'outline';
+              let className = 'h-16 text-lg';
+
+              if (isAnswered) {
+                if (option === currentQuestion.flashcard.name) {
+                  // Correct answer: Green border/text
+                  className += ' border-2 border-green-500 text-green-600 bg-green-50 hover:bg-green-50 hover:text-green-600';
+                } else if (isSelected && !isCorrect) {
+                  // Wrong selected answer: Red border/text
+                  className += ' border-2 border-red-500 text-red-600 bg-red-50 hover:bg-red-50 hover:text-red-600';
+                } else {
+                  // Other options: fade out slightly
+                  className += ' opacity-50';
+                }
+              } else {
+                // Not answered yet
+                if (isSelected) {
+                  variant = 'default';
+                }
+              }
+
+              return (
                 <Button
                   key={index}
-                  variant={selectedOption === option ? 'default' : 'outline'}
-                  className="h-16 text-lg"
+                  variant={variant as any}
+                  className={className}
                   onClick={() => handleSelectOption(option)}
-                  disabled={submitting || !!selectedOption}
+                  disabled={submitting || isAnswered}
                 >
-                  {submitting && selectedOption === option ? (
+                  {submitting && isSelected ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Đang kiểm tra...
+                      Checking...
                     </>
                   ) : (
                     option
                   )}
                 </Button>
-              ))}
-            </div>
-          ) : (
+              );
+            })}
+          </div>
+
+          {/* Result Footer (Usage + Next Button) - Only when answered */}
+          {isAnswered && (
             <AnimatePresence mode="wait">
               <motion.div
                 key={isCorrect ? 'correct' : 'incorrect'}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="space-y-4"
+                className="space-y-4 pt-4 border-t mt-4"
               >
-                {/* Result Icon */}
-                <div className="flex items-center justify-center py-2">
-                  {isCorrect ? (
-                    <CheckCircle2 className="h-10 w-10 text-green-500" />
-                  ) : (
-                    <XCircle className="h-10 w-10 text-red-500" />
-                  )}
-                </div>
-
-                {/* Correct Answer */}
-                <div className="space-y-2 text-center">
-                  <p className="text-sm text-muted-foreground">Từ tiếng Anh:</p>
-                  <p className="text-3xl font-bold">{currentQuestion.flashcard.name}</p>
-                </div>
-
-                {/* Show selected option if wrong */}
-                {!isCorrect && selectedOption && (
-                  <div className="text-center">
-                    <p className="text-sm text-muted-foreground">Bạn đã chọn:</p>
-                    <p className="text-xl font-semibold text-red-600">{selectedOption}</p>
-                  </div>
-                )}
-
-                {/* Audio Button */}
-                {currentQuestion.flashcard.audio_url && (
-                  <Button
-                    variant="outline"
-                    onClick={handlePlayAudio}
-                    disabled={localIsPlayingAudio}
-                    className="w-full"
-                  >
-                    {localIsPlayingAudio ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Đang phát...
-                      </>
-                    ) : (
-                      <>
-                        <Volume2 className="mr-2 h-4 w-4" />
-                        Phát âm thanh
-                      </>
-                    )}
-                  </Button>
-                )}
-
-                {/* Usage Examples */}
-                {currentQuestion.flashcard.usage && currentQuestion.flashcard.usage.length > 0 && (
-                  <div className="space-y-2 pt-4 border-t">
+                {/* Usage Examples - ONLY when incorrect */}
+                {!isCorrect && currentQuestion.flashcard.usage && currentQuestion.flashcard.usage.length > 0 && (
+                  <div className="space-y-2">
                     <p className="text-sm font-semibold">Ví dụ sử dụng:</p>
                     <div className="space-y-2">
                       {currentQuestion.flashcard.usage.map(

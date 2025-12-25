@@ -9,6 +9,7 @@ import { Loader2, CheckCircle2, XCircle, Volume2, ArrowRight, ArrowLeft } from '
 import { playAudioWithFallback } from '@/lib/audio-utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import useFillInTheBlankStore from '@/store/fill-in-the-blank.store';
+import { toast } from "sonner";
 
 export default function FillInTheBlankPracticePage() {
   const params = useParams();
@@ -185,6 +186,7 @@ export default function FillInTheBlankPracticePage() {
       );
     } catch (error) {
       console.error('Error playing audio:', error);
+      toast.error("Trình duyệt của bạn không hỗ trợ âm thanh này");
     } finally {
       setLocalIsPlayingAudio(false);
     }
@@ -383,26 +385,24 @@ export default function FillInTheBlankPracticePage() {
                 </div>
 
                 {/* Audio Button */}
-                {currentQuestion.flashcard.audio_url && (
-                  <Button
-                    variant="outline"
-                    onClick={handlePlayAudio}
-                    disabled={localIsPlayingAudio}
-                    className="w-full"
-                  >
-                    {localIsPlayingAudio ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Đang phát...
-                      </>
-                    ) : (
-                      <>
-                        <Volume2 className="mr-2 h-4 w-4" />
-                        Phát âm thanh
-                      </>
-                    )}
-                  </Button>
-                )}
+                <Button
+                  variant="outline"
+                  onClick={handlePlayAudio}
+                  disabled={localIsPlayingAudio}
+                  className="w-full"
+                >
+                  {localIsPlayingAudio ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Đang phát...
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="mr-2 h-4 w-4" />
+                      Phát âm thanh
+                    </>
+                  )}
+                </Button>
 
                 {/* Usage Examples */}
                 {currentQuestion.flashcard.usage && currentQuestion.flashcard.usage.length > 0 && (

@@ -89,7 +89,11 @@ export const UserScalarFieldEnum = {
   phone: 'phone',
   gender: 'gender',
   name: 'name',
-  role: 'role'
+  role: 'role',
+  isVerified: 'isVerified',
+  verificationToken: 'verificationToken',
+  resetPasswordToken: 'resetPasswordToken',
+  resetPasswordExpires: 'resetPasswordExpires'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -100,11 +104,11 @@ export const FolderScalarFieldEnum = {
   name: 'name',
   description: 'description',
   user_id: 'user_id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   isPublic: 'isPublic',
   saves: 'saves',
-  version: 'version',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  version: 'version'
 } as const
 
 export type FolderScalarFieldEnum = (typeof FolderScalarFieldEnum)[keyof typeof FolderScalarFieldEnum]
@@ -118,14 +122,14 @@ export const FlashcardScalarFieldEnum = {
   review_count: 'review_count',
   audio_url: 'audio_url',
   usage: 'usage',
-  status: 'status',
-  interval: 'interval',
-  nextReview: 'nextReview',
-  easeFactor: 'easeFactor',
-  lapseCount: 'lapseCount',
   tags: 'tags',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  easeFactor: 'easeFactor',
+  interval: 'interval',
+  lapseCount: 'lapseCount',
+  nextReview: 'nextReview',
+  status: 'status'
 } as const
 
 export type FlashcardScalarFieldEnum = (typeof FlashcardScalarFieldEnum)[keyof typeof FlashcardScalarFieldEnum]
@@ -159,7 +163,6 @@ export const PracticeSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   folderId: 'folderId',
-  folderVersion: 'folderVersion',
   mode: 'mode',
   status: 'status',
   currentIndex: 'currentIndex',
@@ -169,7 +172,8 @@ export const PracticeSessionScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  folderVersion: 'folderVersion'
 } as const
 
 export type PracticeSessionScalarFieldEnum = (typeof PracticeSessionScalarFieldEnum)[keyof typeof PracticeSessionScalarFieldEnum]

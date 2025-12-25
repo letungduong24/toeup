@@ -116,7 +116,6 @@ export default function FlashcardPage() {
                   transition={{ delay: 0.25, duration: 0.4 }}
                 >
                   <h1 className='font-bold text-white text-xl'>Tạo Flashbook</h1>
-                  <p className='text-xs text-white text-right'>Học Flashcard theo nhóm</p>
                 </motion.div>
               </motion.div>
 
@@ -153,7 +152,6 @@ export default function FlashcardPage() {
                   transition={{ delay: 0.3, duration: 0.4 }}
                 >
                   <h1 className='font-bold  text-xl'>Khám phá</h1>
-                  <p className='text-xs'>Tải về các Flashbook</p>
                 </motion.div>
               </motion.div>
             </div>

@@ -1,7 +1,9 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { validatePassword } from 'src/lib/bcrypt.util';
+import * as bcrypt from 'bcrypt';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +12,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private mailService: MailService,
   ) { }
 
   async validateUser(signInRequest: { email: string; password: string }) {
@@ -71,6 +74,14 @@ export class AuthService {
       throw new UnauthorizedException('Không thể tạo tài khoản');
     }
     const access_token = this.jwtService.sign({ sub: user.id, email: user.email });
+
+    // Send verification email
+    try {
+      await this.sendVerificationEmail(user.id);
+    } catch (error) {
+      this.logger.error('Failed to send verification email on signup', error);
+    }
+
     return {
       user,
       access_token,
@@ -86,31 +97,126 @@ export class AuthService {
     if (user) {
       // 2. If user exists but has no googleId, link it (optional, or just logic)
       if (!user.googleId) {
-        // You might want to update the user with googleId here
-        // await this.usersService.update(user.id, { googleId, avatarUrl: picture });
+        await this.usersService.update(user.id, { googleId, avatarUrl: picture });
+      }
+
+      // Auto-verify if logged in via Google
+      if (!user.isVerified) {
+        await this.usersService.update(user.id, { isVerified: true });
       }
     } else {
       // 3. Create new user
       const name = displayName || `${firstName || ''} ${lastName || ''}`.trim();
-      // Generate a random password or leave it null (since we made it optional)
-      // Since create() might expect password if not updated, let's assume create handles it or we pass a dummy one if required
-      // But looking at schema, password is now optional.
-      // However, check UsersService.create signature.
-
-      // For now, assuming UsersService.create can handle it or we adapt it.
-      // We'll trust create() uses the DTO/Type which might fail if password is required there.
-      // Safe bet: Pass a random password or modify UsersService.
 
       user = await this.usersService.create({
         email,
         name,
-        password: '', // Should be handled by User service to allow empty if schema supports it
+        password: '',
         googleId,
         avatarUrl: picture,
+        isVerified: true,
       } as any);
     }
 
     return user;
   }
 
+
+  async sendVerificationEmail(userId: string) {
+    const user = await this.usersService.findById(userId);
+    if (!user) throw new UnauthorizedException('User not found');
+
+    // Generate token
+    const token = this.jwtService.sign({ sub: user.id, purpose: 'verify-email' }, { expiresIn: '1d' });
+
+    // Save token to DB
+    await this.usersService.update(userId, { verificationToken: token });
+
+    // Send email
+    await this.mailService.sendVerificationEmail(user.email, token);
+  }
+
+  async verifyEmail(token: string) {
+    try {
+      const payload = this.jwtService.verify(token);
+      if (payload.purpose !== 'verify-email') throw new UnauthorizedException('Invalid token');
+
+      const user = await this.usersService.findById(payload.sub);
+      if (!user) throw new UnauthorizedException('User not found');
+
+      // Verify token matches DB
+      if (user.verificationToken !== token) {
+        throw new UnauthorizedException('Invalid or expired token');
+      }
+
+      await this.usersService.update(user.id, { isVerified: true, verificationToken: null });
+      return user;
+    } catch (e) {
+      this.logger.error('Verification failed', e);
+      throw new UnauthorizedException('Invalid or expired verification token');
+    }
+  }
+
+  async forgotPassword(email: string) {
+    const user = await this.usersService.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException('Email không tồn tại trong hệ thống');
+    }
+
+    if (user.googleId) {
+      // Optional: Inform user they signed up with Google?
+      // For now, proceed as normal but they might not have a password set.
+    }
+
+    // Generate simple token (random string) or JWT
+    // Using JWT for convenience, valid for 1 hour
+    const token = this.jwtService.sign({ sub: user.id, purpose: 'reset-password' }, { expiresIn: '1h' });
+    const expires = new Date(Date.now() + 3600000); // 1 hour
+
+    await this.usersService.update(user.id, {
+      resetPasswordToken: token,
+      resetPasswordExpires: expires
+    });
+
+    await this.mailService.sendPasswordResetEmail(user.email, token);
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    try {
+      // 1. Verify JWT first
+      const payload = this.jwtService.verify(token);
+      if (payload.purpose !== 'reset-password') throw new UnauthorizedException('Invalid token');
+
+      // 2. Check DB match
+      const user = await this.usersService.findById(payload.sub);
+      if (!user) throw new UnauthorizedException('User not found');
+
+      if (user.resetPasswordToken !== token) {
+        throw new UnauthorizedException('Invalid or used token');
+      }
+
+      // Check expiry (redundant if JWT checks it, but good for safety if we used random string)
+      if (user.resetPasswordExpires && new Date() > user.resetPasswordExpires) {
+        throw new UnauthorizedException('Token expired');
+      }
+
+      // 3. Update password
+      // Hasu password - logic duplicated from UsersService or utilize a helper?
+      // Since validatePassword uses bcrypt, we should hash it. 
+      // Ideally UsersService should handle hashing on update if password is changed, 
+      // OR we import hash here. Let's use bcrypt here since we imported validatePassword.
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await this.usersService.update(user.id, {
+        password: hashedPassword,
+        resetPasswordToken: null,
+        resetPasswordExpires: null,
+      });
+
+      return user;
+    } catch (e) {
+      this.logger.error('Reset password failed', e);
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+  }
 }

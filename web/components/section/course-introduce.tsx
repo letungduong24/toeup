@@ -13,25 +13,26 @@ const CourseIntroduce = () => {
           <img className="w-full rounded-2xl h-full" src="/3.png" alt="" />
         </div>
         <div className="w-full grid grid-cols-2 gap-4">
-          <Card className="w-full flex justify-center items-start p-5 rounded-2xl">
-            <FaBoltLightning  className="text-3xl"/>
-            <p className="text-xl font-bold">Trắc nghiệm</p>
-            <p className="text-sm">Chọn đáp án đúng</p>
+          <Card className="w-full flex justify-center items-start p-5 rounded-2xl flex-col gap-2">
+            <FaBoltLightning className="text-3xl" />
+            <div>
+              <p className="text-xl font-bold">Trắc nghiệm</p>
+              <p className="text-sm text-muted-foreground">Chọn đáp án đúng từ các lựa chọn</p>
+            </div>
           </Card>
-          <Card className="w-full flex justify-center items-start p-7 rounded-2xl">
-            <FaStickyNote  className="text-3xl"/>
-            <p className="text-xl font-bold">Điền từ</p>
-            <p className="text-sm">Điền từ tiếng Anh thích hợp</p>
+          <Card className="w-full flex justify-center items-start p-5 rounded-2xl flex-col gap-2">
+            <FaStickyNote className="text-3xl" />
+            <div>
+              <p className="text-xl font-bold">Điền từ</p>
+              <p className="text-sm text-muted-foreground">Điền từ tiếng Anh thích hợp</p>
+            </div>
           </Card>
-          <Card className="w-full flex justify-center items-start p-7 rounded-2xl">
-            <MdQuestionAnswer  className="text-3xl"/>
-            <p className="text-xl font-bold">Viết câu</p>
-            <p className="text-sm">Viết câu với từ cho trước</p>
-          </Card>
-          <Card className="w-full flex justify-center items-start p-7 rounded-2xl">
-            <IoIosDocument  className="text-3xl"/>
-            <p className="text-xl font-bold">Viết đoạn văn</p>
-            <p className="text-sm">Viết đoạn văn với từ cho trước</p>
+          <Card className="w-full flex justify-center items-start p-5 rounded-2xl col-span-2 flex-col gap-2">
+            <MdQuestionAnswer className="text-3xl" />
+            <div>
+              <p className="text-xl font-bold">Viết câu</p>
+              <p className="text-sm text-muted-foreground">Luyện tập viết câu hoàn chỉnh (AI chấm điểm)</p>
+            </div>
           </Card>
         </div>
       </div>

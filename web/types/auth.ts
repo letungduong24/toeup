@@ -24,6 +24,7 @@ const userSchema = signUpRequestSchema.extend({
   gender: z.string().nullable().optional(),
   role: z.enum(["USER", "ADMIN"]).default("USER"),
   address: z.string().nullable().optional(),
+  isVerified: z.boolean().default(false),
 });
 
 export const userResponseSchema = userSchema.omit({ password: true });

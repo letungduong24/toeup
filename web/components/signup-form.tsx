@@ -24,7 +24,7 @@ export function SignupForm({
 }: React.ComponentProps<"form">) {
   const router = useRouter();
   const { signup, signUpLoading } = useAuthStore();
-  
+
   const {
     register,
     handleSubmit,
@@ -36,15 +36,15 @@ export function SignupForm({
   const onSubmit = async (data: SignUpRequest) => {
     try {
       await signup(data);
-      router.push('/');
+      router.push('/dashboard');
     } catch (error) {
       // Error đã được xử lý trong store
     }
   };
 
   return (
-    <form 
-      className={cn("flex flex-col gap-6", className)} 
+    <form
+      className={cn("flex flex-col gap-6", className)}
       onSubmit={handleSubmit(onSubmit)}
       {...props}
     >
@@ -54,10 +54,10 @@ export function SignupForm({
         </div>
         <Field>
           <FieldLabel htmlFor="name">Tên</FieldLabel>
-          <Input 
-            id="name" 
-            type="text" 
-            placeholder="Nhập tên của bạn" 
+          <Input
+            id="name"
+            type="text"
+            placeholder="Nhập tên của bạn"
             {...register("name")}
             aria-invalid={errors.name ? "true" : "false"}
           />
@@ -65,10 +65,10 @@ export function SignupForm({
         </Field>
         <Field>
           <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input 
-            id="email" 
-            type="email" 
-            placeholder="m@example.com" 
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
             {...register("email")}
             aria-invalid={errors.email ? "true" : "false"}
           />
@@ -76,9 +76,9 @@ export function SignupForm({
         </Field>
         <Field>
           <FieldLabel htmlFor="password">Mật khẩu</FieldLabel>
-          <Input 
-            id="password" 
-            type="password" 
+          <Input
+            id="password"
+            type="password"
             placeholder="Tối thiểu 6 ký tự"
             {...register("password")}
             aria-invalid={errors.password ? "true" : "false"}
@@ -92,7 +92,13 @@ export function SignupForm({
         </Field>
         <FieldSeparator>Hoặc đăng ký với</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button">
+          <Button
+            variant="outline"
+            type="button"
+            onClick={() => {
+              window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+            }}
+          >
             <FaGoogle />
             Đăng ký với Google
           </Button>

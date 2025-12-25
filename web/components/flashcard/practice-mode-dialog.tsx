@@ -55,7 +55,7 @@ export default function PracticeModeDialog({
                 <FileQuestion className="h-6 w-6 text-primary" />
                 <div className="flex-1 text-left">
                   <div className="font-semibold">Trắc nghiệm</div>
-                  <div className="text-sm text-muted-foreground font-normal">
+                  <div className="text-sm text-muted-foreground font-normal text-wrap">
                     Chọn đáp án đúng từ các lựa chọn
                   </div>
                 </div>
@@ -78,7 +78,7 @@ export default function PracticeModeDialog({
                 <Pencil className="h-6 w-6 text-primary" />
                 <div className="flex-1 text-left">
                   <div className="font-semibold">Điền từ</div>
-                  <div className="text-sm text-muted-foreground font-normal">
+                  <div className="text-sm text-muted-foreground font-normal text-wrap">
                     Điền từ tiếng Anh vào chỗ trống
                   </div>
                 </div>
@@ -101,7 +101,7 @@ export default function PracticeModeDialog({
                 <Pencil className="h-6 w-6 text-primary" />
                 <div className="flex-1 text-left">
                   <div className="font-semibold">Viết câu</div>
-                  <div className="text-sm text-muted-foreground font-normal">
+                  <div className="text-sm text-muted-foreground font-normal text-wrap">
                     Luyện đặt câu với từ vựng và nhận feedback AI
                   </div>
                 </div>

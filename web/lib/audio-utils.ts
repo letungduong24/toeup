@@ -75,7 +75,7 @@ export async function playAudioWithFallback(
 export function playAudioFile(audioUrl: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const audio = new Audio(audioUrl);
-    
+
     // If audio fails to load, reject after timeout
     const timeout = setTimeout(() => {
       reject(new Error('Audio loading timeout'));

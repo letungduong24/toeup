@@ -138,7 +138,7 @@ export default function SelectFolderDialog({
                         className="flex-1"
                       >
                         <PiStarFour className="mr-2 h-4 w-4" />
-                        Trợ lý AI
+                        Tạo với AI
                       </Button>
                     </div>
                   </EmptyContent>
