@@ -1,9 +1,6 @@
 import React from 'react'
 import FlashCard from '../flashcard/flashcard'
 import { FlashcardResponse } from '@/types/flashcard'
-import PromptInputDemo from '../ui/prompt-input-demo'
-import AIResponseDemo from '../ui/ai-response-demo'
-import { BackgroundGradient } from '../ui/shadcn-io/background-gradient'
 
 const flashcardData: FlashcardResponse = {
   id: 'clx1234567890abcdefghij',
