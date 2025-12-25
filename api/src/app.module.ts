@@ -12,6 +12,7 @@ import { FlashcardsModule } from './flashcards/flashcards.module';
 import { StudyModule } from './study/study.module';
 import { PracticeModule } from './practice/practice.module';
 import { AttendanceModule } from './attendance/attendance.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -27,6 +28,10 @@ import { AttendanceModule } from './attendance/attendance.module';
     StudyModule,
     PracticeModule,
     AttendanceModule,
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 10,
+    }]),
   ],
   controllers: [AppController,],
   providers: [

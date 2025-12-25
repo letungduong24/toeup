@@ -1057,6 +1057,9 @@ export const UserScalarFieldEnum = {
   role: 'role',
   isVerified: 'isVerified',
   verificationToken: 'verificationToken',
+  verificationExpires: 'verificationExpires',
+  verificationRequests: 'verificationRequests',
+  lastVerificationRequest: 'lastVerificationRequest',
   resetPasswordToken: 'resetPasswordToken',
   resetPasswordExpires: 'resetPasswordExpires'
 } as const

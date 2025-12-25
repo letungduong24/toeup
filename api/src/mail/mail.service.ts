@@ -7,19 +7,20 @@ export class MailService {
     private transporter: nodemailer.Transporter;
 
     constructor() {
+        const host = process.env.SMTP_HOST || 'smtp.gmail.com';
         const port = Number(process.env.SMTP_PORT) || 587;
+        const user = process.env.SMTP_USER;
+
+        this.logger.log(`Initializing MailService with Host: ${host}, Port: ${port}, User: ${user ? '***' : 'None'}`);
+
         this.transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || 'smtp.gmail.com',
-            port: port,
-            secure: port === 465, // true for 465, false for other ports
+            host,
+            port,
+            secure: process.env.SMTP_SECURE === 'true',
             auth: {
                 user: process.env.SMTP_USER,
                 pass: process.env.SMTP_PASS,
             },
-            // Reduce timeouts to fail faster if blocked
-            connectionTimeout: 10000,
-            greetingTimeout: 10000,
-            socketTimeout: 10000,
         });
     }
 
@@ -36,7 +37,7 @@ export class MailService {
 
         try {
             await this.transporter.sendMail({
-                from: '"FlashUp App" <no-reply@flashup.com>',
+                from: process.env.SMTP_FROM || '"FlashUp App" <no-reply@flashup.com>',
                 to: email,
                 subject: 'Xác thực tài khoản FlashUp',
                 html: `
@@ -72,7 +73,7 @@ export class MailService {
 
         try {
             await this.transporter.sendMail({
-                from: '"FlashUp App" <no-reply@flashup.com>',
+                from: process.env.SMTP_FROM || '"FlashUp App" <no-reply@flashup.com>',
                 to: email,
                 subject: 'Đặt lại mật khẩu FlashUp',
                 html: `

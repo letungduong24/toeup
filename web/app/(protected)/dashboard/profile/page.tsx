@@ -125,7 +125,7 @@ export default function ProfilePage() {
                             <div className="flex items-center gap-3 w-full">
                                 <div>
                                     <h3 className="font-semibold">Tài khoản chưa được xác thực</h3>
-                                    <p className="text-sm text-muted-foreground">Vui lòng kiểm tra email để xác thực tài khoản của bạn.</p>
+                                    <p className="text-sm text-muted-foreground">Vui lòng kiểm tra email (bao gồm hộp thư rác/spam) để xác thực tài khoản của bạn.</p>
                                 </div>
                             </div>
                             <Button

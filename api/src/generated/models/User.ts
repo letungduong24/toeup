@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  verificationRequests: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  verificationRequests: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -39,6 +49,9 @@ export type UserMinAggregateOutputType = {
   role: string | null
   isVerified: boolean | null
   verificationToken: string | null
+  verificationExpires: Date | null
+  verificationRequests: number | null
+  lastVerificationRequest: Date | null
   resetPasswordToken: string | null
   resetPasswordExpires: Date | null
 }
@@ -58,6 +71,9 @@ export type UserMaxAggregateOutputType = {
   role: string | null
   isVerified: boolean | null
   verificationToken: string | null
+  verificationExpires: Date | null
+  verificationRequests: number | null
+  lastVerificationRequest: Date | null
   resetPasswordToken: string | null
   resetPasswordExpires: Date | null
 }
@@ -77,11 +93,22 @@ export type UserCountAggregateOutputType = {
   role: number
   isVerified: number
   verificationToken: number
+  verificationExpires: number
+  verificationRequests: number
+  lastVerificationRequest: number
   resetPasswordToken: number
   resetPasswordExpires: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  verificationRequests?: true
+}
+
+export type UserSumAggregateInputType = {
+  verificationRequests?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -98,6 +125,9 @@ export type UserMinAggregateInputType = {
   role?: true
   isVerified?: true
   verificationToken?: true
+  verificationExpires?: true
+  verificationRequests?: true
+  lastVerificationRequest?: true
   resetPasswordToken?: true
   resetPasswordExpires?: true
 }
@@ -117,6 +147,9 @@ export type UserMaxAggregateInputType = {
   role?: true
   isVerified?: true
   verificationToken?: true
+  verificationExpires?: true
+  verificationRequests?: true
+  lastVerificationRequest?: true
   resetPasswordToken?: true
   resetPasswordExpires?: true
 }
@@ -136,6 +169,9 @@ export type UserCountAggregateInputType = {
   role?: true
   isVerified?: true
   verificationToken?: true
+  verificationExpires?: true
+  verificationRequests?: true
+  lastVerificationRequest?: true
   resetPasswordToken?: true
   resetPasswordExpires?: true
   _all?: true
@@ -179,6 +215,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -209,6 +257,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -228,9 +278,14 @@ export type UserGroupByOutputType = {
   role: string
   isVerified: boolean
   verificationToken: string | null
+  verificationExpires: Date | null
+  verificationRequests: number
+  lastVerificationRequest: Date | null
   resetPasswordToken: string | null
   resetPasswordExpires: Date | null
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -268,6 +323,9 @@ export type UserWhereInput = {
   role?: Prisma.StringFilter<"User"> | string
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   verificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  verificationExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  verificationRequests?: Prisma.IntFilter<"User"> | number
+  lastVerificationRequest?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resetPasswordToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetPasswordExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   attendances?: Prisma.AttendanceListRelationFilter
@@ -291,6 +349,9 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationExpires?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationRequests?: Prisma.SortOrder
+  lastVerificationRequest?: Prisma.SortOrderInput | Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   attendances?: Prisma.AttendanceOrderByRelationAggregateInput
@@ -318,6 +379,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.StringFilter<"User"> | string
   isVerified?: Prisma.BoolFilter<"User"> | boolean
+  verificationExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  verificationRequests?: Prisma.IntFilter<"User"> | number
+  lastVerificationRequest?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   resetPasswordExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   attendances?: Prisma.AttendanceListRelationFilter
   folders?: Prisma.FolderListRelationFilter
@@ -340,11 +404,16 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationExpires?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationRequests?: Prisma.SortOrder
+  lastVerificationRequest?: Prisma.SortOrderInput | Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -365,6 +434,9 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   verificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  verificationExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  verificationRequests?: Prisma.IntWithAggregatesFilter<"User"> | number
+  lastVerificationRequest?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   resetPasswordToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetPasswordExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
@@ -384,6 +456,9 @@ export type UserCreateInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
@@ -407,6 +482,9 @@ export type UserUncheckedCreateInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
@@ -430,6 +508,9 @@ export type UserUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
@@ -453,6 +534,9 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
@@ -476,6 +560,9 @@ export type UserCreateManyInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
 }
@@ -495,6 +582,9 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -514,6 +604,9 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -533,8 +626,15 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
+  verificationExpires?: Prisma.SortOrder
+  verificationRequests?: Prisma.SortOrder
+  lastVerificationRequest?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  verificationRequests?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -552,6 +652,9 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
+  verificationExpires?: Prisma.SortOrder
+  verificationRequests?: Prisma.SortOrder
+  lastVerificationRequest?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrder
 }
@@ -571,8 +674,15 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   verificationToken?: Prisma.SortOrder
+  verificationExpires?: Prisma.SortOrder
+  verificationRequests?: Prisma.SortOrder
+  lastVerificationRequest?: Prisma.SortOrder
   resetPasswordToken?: Prisma.SortOrder
   resetPasswordExpires?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  verificationRequests?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -598,6 +708,14 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type UserCreateNestedOneWithoutFoldersInput = {
@@ -671,6 +789,9 @@ export type UserCreateWithoutFoldersInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
@@ -693,6 +814,9 @@ export type UserUncheckedCreateWithoutFoldersInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
@@ -731,6 +855,9 @@ export type UserUpdateWithoutFoldersInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
@@ -753,6 +880,9 @@ export type UserUncheckedUpdateWithoutFoldersInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
@@ -775,6 +905,9 @@ export type UserCreateWithoutStudyCountsInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
@@ -797,6 +930,9 @@ export type UserUncheckedCreateWithoutStudyCountsInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
@@ -835,6 +971,9 @@ export type UserUpdateWithoutStudyCountsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
@@ -857,6 +996,9 @@ export type UserUncheckedUpdateWithoutStudyCountsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
@@ -879,6 +1021,9 @@ export type UserCreateWithoutAttendancesInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   folders?: Prisma.FolderCreateNestedManyWithoutUserInput
@@ -901,6 +1046,9 @@ export type UserUncheckedCreateWithoutAttendancesInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   folders?: Prisma.FolderUncheckedCreateNestedManyWithoutUserInput
@@ -939,6 +1087,9 @@ export type UserUpdateWithoutAttendancesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   folders?: Prisma.FolderUpdateManyWithoutUserNestedInput
@@ -961,6 +1112,9 @@ export type UserUncheckedUpdateWithoutAttendancesInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   folders?: Prisma.FolderUncheckedUpdateManyWithoutUserNestedInput
@@ -983,6 +1137,9 @@ export type UserCreateWithoutPracticeSessionsInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceCreateNestedManyWithoutUserInput
@@ -1005,6 +1162,9 @@ export type UserUncheckedCreateWithoutPracticeSessionsInput = {
   role?: string
   isVerified?: boolean
   verificationToken?: string | null
+  verificationExpires?: Date | string | null
+  verificationRequests?: number
+  lastVerificationRequest?: Date | string | null
   resetPasswordToken?: string | null
   resetPasswordExpires?: Date | string | null
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutUserInput
@@ -1043,6 +1203,9 @@ export type UserUpdateWithoutPracticeSessionsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUpdateManyWithoutUserNestedInput
@@ -1065,6 +1228,9 @@ export type UserUncheckedUpdateWithoutPracticeSessionsInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  verificationRequests?: Prisma.IntFieldUpdateOperationsInput | number
+  lastVerificationRequest?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   resetPasswordToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetPasswordExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutUserNestedInput
@@ -1145,6 +1311,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   isVerified?: boolean
   verificationToken?: boolean
+  verificationExpires?: boolean
+  verificationRequests?: boolean
+  lastVerificationRequest?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
   attendances?: boolean | Prisma.User$attendancesArgs<ExtArgs>
@@ -1169,6 +1338,9 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isVerified?: boolean
   verificationToken?: boolean
+  verificationExpires?: boolean
+  verificationRequests?: boolean
+  lastVerificationRequest?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1188,6 +1360,9 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   isVerified?: boolean
   verificationToken?: boolean
+  verificationExpires?: boolean
+  verificationRequests?: boolean
+  lastVerificationRequest?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1207,11 +1382,14 @@ export type UserSelectScalar = {
   role?: boolean
   isVerified?: boolean
   verificationToken?: boolean
+  verificationExpires?: boolean
+  verificationRequests?: boolean
+  lastVerificationRequest?: boolean
   resetPasswordToken?: boolean
   resetPasswordExpires?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "avatarUrl" | "createdAt" | "updatedAt" | "address" | "phone" | "gender" | "name" | "role" | "isVerified" | "verificationToken" | "resetPasswordToken" | "resetPasswordExpires", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "avatarUrl" | "createdAt" | "updatedAt" | "address" | "phone" | "gender" | "name" | "role" | "isVerified" | "verificationToken" | "verificationExpires" | "verificationRequests" | "lastVerificationRequest" | "resetPasswordToken" | "resetPasswordExpires", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attendances?: boolean | Prisma.User$attendancesArgs<ExtArgs>
   folders?: boolean | Prisma.User$foldersArgs<ExtArgs>
@@ -1245,6 +1423,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: string
     isVerified: boolean
     verificationToken: string | null
+    verificationExpires: Date | null
+    verificationRequests: number
+    lastVerificationRequest: Date | null
     resetPasswordToken: string | null
     resetPasswordExpires: Date | null
   }, ExtArgs["result"]["user"]>
@@ -1688,6 +1869,9 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'String'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly verificationToken: Prisma.FieldRef<"User", 'String'>
+  readonly verificationExpires: Prisma.FieldRef<"User", 'DateTime'>
+  readonly verificationRequests: Prisma.FieldRef<"User", 'Int'>
+  readonly lastVerificationRequest: Prisma.FieldRef<"User", 'DateTime'>
   readonly resetPasswordToken: Prisma.FieldRef<"User", 'String'>
   readonly resetPasswordExpires: Prisma.FieldRef<"User", 'DateTime'>
 }

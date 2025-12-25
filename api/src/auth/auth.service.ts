@@ -126,11 +126,31 @@ export class AuthService {
     const user = await this.usersService.findById(userId);
     if (!user) throw new UnauthorizedException('User not found');
 
-    // Generate token
-    const token = this.jwtService.sign({ sub: user.id, purpose: 'verify-email' }, { expiresIn: '1d' });
+    // Rate limiting: 3 requests per day
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Start of today
 
-    // Save token to DB
-    await this.usersService.update(userId, { verificationToken: token });
+    // Check if last request was on a different day, reset counter
+    if (user.lastVerificationRequest && user.lastVerificationRequest < today) {
+      await this.usersService.update(userId, { verificationRequests: 0 });
+      user.verificationRequests = 0; // update local object
+    }
+
+    if (user.verificationRequests >= 3) {
+      throw new UnauthorizedException('Bạn đã gửi quá nhiều yêu cầu xác thực trong ngày. Vui lòng thử lại vào ngày mai.');
+    }
+
+    // Generate token
+    const token = this.jwtService.sign({ sub: user.id, purpose: 'verify-email' }, { expiresIn: '1h' });
+    const expires = new Date(now.getTime() + 3600000); // 1 hour
+
+    // Save token and increment stats to DB
+    await this.usersService.update(userId, {
+      verificationToken: token,
+      verificationExpires: expires,
+      verificationRequests: (user.verificationRequests || 0) + 1,
+      lastVerificationRequest: now
+    });
 
     // Send email
     await this.mailService.sendVerificationEmail(user.email, token);
@@ -146,36 +166,52 @@ export class AuthService {
 
       // Verify token matches DB
       if (user.verificationToken !== token) {
-        throw new UnauthorizedException('Invalid or expired token');
+        throw new UnauthorizedException('Mã xác thực không hợp lệ hoặc đã được sử dụng.');
       }
 
-      await this.usersService.update(user.id, { isVerified: true, verificationToken: null });
+      // Check expiry
+      if (user.verificationExpires && new Date() > user.verificationExpires) {
+        throw new UnauthorizedException('Mã xác thực đã hết hạn. Vui lòng yêu cầu mã mới.');
+      }
+
+      await this.usersService.update(user.id, {
+        isVerified: true,
+        verificationToken: null,
+        verificationExpires: null
+      });
       return user;
     } catch (e) {
       this.logger.error('Verification failed', e);
-      throw new UnauthorizedException('Invalid or expired verification token');
+      // Better error message for user
+      if (e instanceof UnauthorizedException) {
+        throw e;
+      }
+      throw new UnauthorizedException('Đường dẫn xác thực không hợp lệ hoặc đã hết hạn.');
     }
   }
 
   async forgotPassword(email: string) {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
+      // Security: Don't reveal if email exists, or reveal it? Usually reveal is bad, but for UX it might be needed.
+      // Based on previous code, we revealed it.
       throw new NotFoundException('Email không tồn tại trong hệ thống');
     }
 
-    if (user.googleId) {
-      // Optional: Inform user they signed up with Google?
-      // For now, proceed as normal but they might not have a password set.
+    if (user.googleId && !user.password) {
+      // Inform user they signed up with Google
+      throw new UnauthorizedException('Tài khoản này được đăng ký bằng Google. Vui lòng đăng nhập bằng Google.');
     }
 
+    const now = new Date();
     // Generate simple token (random string) or JWT
     // Using JWT for convenience, valid for 1 hour
     const token = this.jwtService.sign({ sub: user.id, purpose: 'reset-password' }, { expiresIn: '1h' });
-    const expires = new Date(Date.now() + 3600000); // 1 hour
+    const expires = new Date(now.getTime() + 3600000); // 1 hour
 
     await this.usersService.update(user.id, {
       resetPasswordToken: token,
-      resetPasswordExpires: expires
+      resetPasswordExpires: expires,
     });
 
     await this.mailService.sendPasswordResetEmail(user.email, token);

@@ -16,6 +16,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { SignUpDto } from './dto/sign-up.dto';
+import { ThrottlerGuard, Throttle } from '@nestjs/throttler';
 
 @Controller('auth')
 export class AuthController {
@@ -117,6 +118,8 @@ export class AuthController {
   }
 
   @Post('forgot-password')
+  @UseGuards(ThrottlerGuard)
+  @Throttle({ default: { limit: 1, ttl: 6000 } })
   async forgotPassword(@Body('email') email: string) {
     await this.authService.forgotPassword(email);
     // Always return success to prevent email enumeration

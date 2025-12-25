@@ -521,14 +521,6 @@ export type FolderUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.FolderScalarWhereInput | Prisma.FolderScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type FolderCreateNestedOneWithoutFlashcardsInput = {
   create?: Prisma.XOR<Prisma.FolderCreateWithoutFlashcardsInput, Prisma.FolderUncheckedCreateWithoutFlashcardsInput>
   connectOrCreate?: Prisma.FolderCreateOrConnectWithoutFlashcardsInput

@@ -38,7 +38,10 @@ export default function ForgotPasswordPage() {
             setSuccess(true);
             toast.success('Email đặt lại mật khẩu đã được gửi!');
         } catch (error: any) {
-            const msg = error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại.';
+            let msg = error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại.';
+            if (error.response?.status === 429) {
+                msg = 'Bạn đang gửi yêu cầu quá nhanh. Vui lòng thử lại sau một phút.';
+            }
             toast.error(msg);
         } finally {
             setLoading(false);
@@ -58,7 +61,7 @@ export default function ForgotPasswordPage() {
                     {success ? (
                         <div className="flex flex-col gap-4 text-center">
                             <div className="w-full">
-                                <p className="w-full text-sm text-green-800">Email đã được gửi! Vui lòng kiểm tra hộp thư của bạn.</p>
+                                <p className="w-full text-sm text-green-800">Email đã được gửi! Vui lòng kiểm tra hộp thư của bạn (bao gồm cả thư mục Spam/Rác).</p>
                             </div>
                             <Button asChild variant="outline">
                                 <Link href="/signin">Quay lại đăng nhập</Link>

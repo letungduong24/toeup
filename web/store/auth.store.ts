@@ -117,13 +117,14 @@ const useAuthStore = create<AuthState>((set) => ({
     sendVerificationEmail: async () => {
         try {
             await api.post('/auth/email/send-verification');
-            toast.success('Email xác thực đã được gửi!');
+            toast.success('Email xác thực đã được gửi! Vui lòng kiểm tra cả hòm thư Spam.');
         } catch (error: any) {
             if (error.response?.data?.message) {
                 toast.error(error.response.data.message)
             } else {
                 toast.error('Gửi email thất bại')
             }
+            throw error;
         }
     }
 }));

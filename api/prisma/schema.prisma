@@ -21,10 +21,13 @@ model User {
   gender               String?
   name                 String?
   role                 String            @default("USER")
-  isVerified           Boolean           @default(false)
-  verificationToken    String?           @unique
-  resetPasswordToken   String?           @unique
-  resetPasswordExpires DateTime?
+  isVerified               Boolean           @default(false)
+  verificationToken        String?           @unique
+  verificationExpires      DateTime?
+  verificationRequests     Int               @default(0)
+  lastVerificationRequest  DateTime?
+  resetPasswordToken       String?           @unique
+  resetPasswordExpires     DateTime?
   attendances          Attendance[]
   folders              Folder[]
   practiceSessions     PracticeSession[]

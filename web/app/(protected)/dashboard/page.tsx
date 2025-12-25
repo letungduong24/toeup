@@ -54,15 +54,18 @@ export default function DashboardPage() {
   const [verificationSent, setVerificationSent] = useState(false);
 
   const [isResending, setIsResending] = useState(false);
+  const [rateLimitExceeded, setRateLimitExceeded] = useState(false);
 
   const handleResendVerification = async () => {
-    if (verificationSent || isResending) return;
+    if (verificationSent || isResending || rateLimitExceeded) return;
     setIsResending(true);
     try {
       await sendVerificationEmail();
       setVerificationSent(true);
-    } catch (error) {
-      // Error is handled in store
+    } catch (error: any) {
+      if (error?.response?.data?.message?.includes('quá nhiều yêu cầu')) {
+        setRateLimitExceeded(true);
+      }
     } finally {
       setIsResending(false);
     }
@@ -169,7 +172,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-3 w-full">
                 <div>
                   <h3 className="font-semibold">Tài khoản chưa được xác thực</h3>
-                  <p className="text-sm text-muted-foreground">Vui lòng kiểm tra email để xác thực tài khoản của bạn.</p>
+                  <p className="text-sm text-muted-foreground">Vui lòng kiểm tra email (bao gồm hộp thư rác/spam) để xác thực tài khoản của bạn.</p>
                 </div>
               </div>
               <Button
@@ -177,7 +180,7 @@ export default function DashboardPage() {
                 size="sm"
                 className="w-full md:w-fit"
                 onClick={handleResendVerification}
-                disabled={verificationSent || isResending}
+                disabled={verificationSent || isResending || rateLimitExceeded}
               >
                 {isResending ? (
                   <>
