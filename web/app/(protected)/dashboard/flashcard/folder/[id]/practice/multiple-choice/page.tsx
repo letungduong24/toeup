@@ -369,10 +369,10 @@ export default function MultipleChoicePracticePage() {
               if (isAnswered) {
                 if (option === currentQuestion.flashcard.name) {
                   // Correct answer: Green border/text
-                  className += ' border-2 border-green-500 text-green-600 bg-green-50 hover:bg-green-50 hover:text-green-600';
+                  className += ' border-2 border-green-500 text-green-600 bg-green-50 hover:bg-green-50 hover:text-green-600 dark:border-green-400 dark:text-green-400 dark:bg-green-950/30 dark:hover:bg-green-950/30';
                 } else if (isSelected && !isCorrect) {
                   // Wrong selected answer: Red border/text
-                  className += ' border-2 border-red-500 text-red-600 bg-red-50 hover:bg-red-50 hover:text-red-600';
+                  className += ' border-2 border-red-500 text-red-600 bg-red-50 hover:bg-red-50 hover:text-red-600 dark:border-red-400 dark:text-red-400 dark:bg-red-950/30 dark:hover:bg-red-950/30';
                 } else {
                   // Other options: fade out slightly
                   className += ' opacity-50';
